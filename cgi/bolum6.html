@@ -1,0 +1,410 @@
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<link rel="shortcut icon" href="/grafik/sinanilyas.ico">
+<title>[ www.sinanilyas.com ]</title>
+<link rel="stylesheet" type="text/css" href="/css/ortak.css">
+
+</head>
+
+<body>
+
+<table cellspacing="0" cellpadding="0" align="center" border="0" width= "99%">
+	<tr style="text-align: center;">
+		<td style="background: url(/grafik/cerceve-sol-ust.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-ust.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-ust.gif); width:29px; height: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol.gif); width: 29px;"></td>
+		<td style="padding-left: 10px; padding-right: 10px; padding-top: 30px; padding-bottom: 10px;">
+			<p class="sayfabasligi">Bölüm 6</p>
+
+			<!-- Gövde metni başlangıcı -->
+
+<p></p>
+
+Daha ileri seviye CGI uygulamaları hazırlamaya başladığınızda bilgileri daha sonra kullanmak üzere dosyalara yazarak saklamak isteyeceksiniz. Mesela bir misafir defteri (guestbook) programınız olabilir ve isim, e-mail gibi bilgileri bir log dosyasına kaydetmek isteyebilirsiniz. Ya da bir sayac programının bir dosyadaki sayıyı arttırmasını isteyebilirsiniz. Hatta bir veritabanı dosyasından bilgi tarayarak bulup web sayfasına yazdıran bir program yapmak isteyebilirsiniz. Bütün bunları yapabilmek için dosya işlemlerini yani dosyadan bilgi okuma ve dosyaya bilgi yazmayı öğrenmelisiniz.
+
+<p>
+Çoğu server minimum erişim yetkileriyle çalışır. Bu server'ın güvenliği açısından önemlidir fakat dosyalara yazmayı güçleştirir. CGI programının yeni dosyalar oluşturmaya yetkisi yoktur. CGI programının dosyaya bilgi yazabilmesi için dosyanın erişim yetkilerinin aşağıdaki komutla &quot;herkes tarafından yazılabilir&quot; yapılması gerekir.
+
+<p>
+<ul>
+<font face="courier new">chmod 666 &lt;dosya adı&gt;</font>
+</ul>
+
+<p>
+Bu komut dosyanın herkes tarafından okunabilir ve yazılabilir olmasını sağlar. Yalnız işin bir de kötü tarafı var. Server'ınızdaki diğer kullanıcılar rahatlıkla dosyanızı silebilirler. Ve malesef bu konuda diğer kullanıcılara güvenmekten başka yapabileceğiniz birşey yok :)
+
+<p>
+Eğer dosyayı sadece içinden bilgi okumak için kullanacaksanız aşağıdaki komutula sadece okuma yetkisi verebilirsiniz.
+
+<p>
+<ul>
+<font face="courier new">chmod 644 &lt;dosya adı&gt;</font>
+</ul>
+
+<h3>Dosyaları Açma</h3>
+
+Dosyaları açmak için <font face="courier new">open</font> komutunu kullanırız.
+
+<p>
+<ul>
+<font face="courier new">open(dosyadegiskeni,dosyaadi);</font>
+</ul>
+
+<p>
+Şimdi bunu açıklamak için birkaç örnek verelim.
+
+<p>
+<ul>
+<font face="courier new">
+open(DOSYA,&quot;bilgi.txt&quot;);&nbsp;&nbsp;&nbsp;&nbsp;# bilgi.txt dosyasını okumak için açar<br>
+open(DOSYA,&quot;&gt;bilgi.txt&quot;);&nbsp;&nbsp;&nbsp;# bilgi.txt dosyasını üstüne yazmak için açar<br>
+open(DOSYA,&quot;&gt;&gt;bilgi.txt&quot;);&nbsp;&nbsp;# bilgi.txt dosyasını eklemek için açar<br>
+</font>
+</ul>
+
+<p>
+Dosya değişkeni, dosyanın programda kullanılacak olan adıdır diyebiliriz. Yani dosyayı açtıktan sonra programın bir yerinde dosyaya erişmek için dosyanın sistemdeki adını değil dosya değişkenini kullanırız. Bu örneklerde dosya değişkeni &quot;DOSYA&quot; olarak seçilmiştir. Fakat dosya değişkeni olarak istediğiniz şeyi yazabilirsiniz.
+
+<p>
+Dosyanın adının başında eğer <font face="courier new">&gt;</font> işareti varsa dosya üstüne yazılmak için açılmıştır yani dosyada bulunan bütün bilgiler silinir ve yerine yenileri yazılır. Dosyanın adının başında eğer <font face="courier new">&gt;&gt;</font> işareti varsa dosya sonuna bilgi eklemek için açılmıştır yani dosyada bulunan bilgiler silinmeden yeni yazacaklarımız dosyadaki bilgilerin sonuna eklenir.
+
+<p>
+Bu arada bir konuda sizi uyarmak istiyorum: CGI programınız eğer tam yolunu yazmamışsanız dosyanızı bulamayabilir. Bu yüzden sadece &quot;<font face="courier new">bilgi.txt</font>&quot; yazmak yerine &quot;<font face="courier new">/home/httpd/cgi-bin/bilgi.txt</font>&quot; şeklinde dosyanın tam yolunu yazmanız gerekebilir.
+
+<p>
+Dosya açmak için yukarıda kullandığımız kodun eksik bir yönü var: Hata kontrolü. Dosyanın açıldığından emin olmak için dosyayı aşağıda gösterildiği şekilde açmalısınız.
+
+<p>
+<ul>
+<font face="courier new">open(DOSYA,&quot;>bilgi.txt&quot;) or &amp;hata(&quot;bilgi.txt dosyası bulunamadı...&quot;);</font>
+</ul>
+
+<p>
+Burada 4. bölümdeki hata alt programı kullanılarak dosya açılmadığı takdirde programın gerekli açıklamayı yazdırarak Perl'den çıkması sağlanır.
+
+<p>
+Şimdi geçen bölümde yazdığımız &quot;form.cgi&quot; programında bazı değişiklikler yaparak form bilgilerini bir dosyaya yazdıralım. Aşağıdaki kodları &quot;form2.cgi&quot; adıyla kaydedin.
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+<br>
+read(STDIN, $tampon, $ENV{'CONTENT_LENGTH'});<br>
+@ciftler = split(/&amp;/, $tampon);<br>
+foreach $cift (@ciftler) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;($isim, $deger) = split(/=/, $cift);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ tr/+/ /;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack(&quot;C&quot;, hex($1))/eg;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ s/\n/ /g;   # satır sonu işaretlerini yok etmek için eklendi<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$FORM{$isim} = $deger;<br>
+}<br>
+<br>
+open(DOSYA,&quot;&gt;&gt;formbilgileri.txt&quot;) or &amp;hata(&quot;formbilgileri.txt dosyası açılamadı. Lütfen webmaster\@adres.com adresine mail atarak webmaster'ı uyarınız.&quot;);<br>
+<br>
+print DOSYA &quot;$FORM{'isim'}|$FORM{'email'}|$FORM{'nasilulasti'}|$FORM{'puan'}|&quot;;<br>
+<br>
+%secim = (&quot;wds&quot; =&gt; &quot;Web Design&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;wsy&quot; =&gt; &quot;Web Server Yöneticiliği&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;tic&quot; =&gt; &quot;Electronic Commerce&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;als&quot; =&gt; &quot;Elektronik Ticaret&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;egt&quot; =&gt; &quot;İnternet Aracılığıyla Eğitim&quot; );<br>
+<br>
+foreach $anahtar (keys %secim) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if ($FORM{$anahtar} == 1) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print DOSYA &quot;$anahtar,&quot;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+print DOSYA &quot;|$FORM{'yorum'}\n&quot;;<br>
+close(DOSYA);<br>
+<br>
+print &lt;&lt;HTMLSonu;<br>
+&lt;html&gt;&lt;head&gt;&lt;title&gt;Teşekkürler&lt;/title&gt;&lt;/head&gt;<br>
+&lt;body&gt;<br>
+&lt;h2&gt;Teşekkürler&lt;/h2&gt;<br>
+Gönderdiğiniz bilgiler kaydedildi.<br>
+&lt;/body&gt;&lt;/html&gt;<br>
+HTMLSonu<br>
+;<br>
+<br>
+sub hata {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;($hatamesaji) = @_;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print &quot;&lt;h2&gt;Hata!&lt;/h2&gt;\n&quot;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print $hatamesaji;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exit;<br>
+}
+</font>
+</ul>
+
+<p>
+Şimdi bilgilerin yazılacağı dosyayı oluşturup &quot;yazılabilir&quot; yapmalısınız. Bunun için programı kaydettiğiniz dizinde şu komutları yazın:
+
+<p>
+<ul>
+<font face="courier new">
+touch formbilgileri.txt<br>
+chmod 666 formbilgileri.txt
+</font>
+</ul>
+
+<p>
+<font face="courier new">touch</font> komutu ile yeni ve boş bir dosya oluşturulur ve <font face="courier new">chmod</font> komutu ile herkesin dosyaya yazabilmesi sağlanır.
+
+<p>
+Şimdi &quot;form.html&quot; dosyasını açın ve formu &quot;form2.cgi&quot; ile göndermesi için gerekli değişikliği yapın. Sonra da &quot;form2.html&quot; adıyla kaydedin. Formu doldurup gönderdiğinizde herşey yolunda gitmişse &quot;formbilgileri.txt&quot; dosyasının içeriği aşağıdaki gibi olacaktır.
+
+<p>
+<ul>
+<font face="courier new">sinan ilyas|mail@adres.com|1|5|wds,egt,|siteniz harika</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/form2.html" target="ornek">Denemek için tıklayın</a>
+
+<p>
+Bu şekilde text dosyasından oluşan ve her satırı yeni bir kayıt olan veritabanı dosyalarına &quot;flat-file database&quot; denir. Bu örnekte alanlar pipe (<font face="courier new">|</font>) işareti ile ayrılmıştır. İsterseniz gönderilen bilgide bulunmacak başka bir karakter kullanabilirsiniz.
+
+<p>
+Yukarıdaki kodla ilgili bir şeyi daha açıklayalım.
+
+<p>
+<ul>
+<font face="courier new">$deger =~ s/\n/ /g;</font>
+</ul>
+
+<p>
+Bu satırla ifadelerin sonlarındaki satır sonu işarertlerini yok ediyoruz çünkü veritabanı dosyamızda her kaydın tek satırda olması gerekiyor. Ayrıca, dikkat etmişseniz peşpeşe birkaç <font face="courier new">print</font> komutu kullanmamıza rağmen herşey tek bir satıra yazdırıldı. Bunun nedeni son <font face="courier new">print</font> komutuna kadar <font face="courier new">\n</font> ifadesini kullanmamış olmamız.
+
+<p>
+Buna bir örnek verirsek sanırım daha iyi anlaşılır.
+
+<p>
+<ul>
+<font face="courier new">
+print &quot;Merhaba, &quot;;<br>
+print &quot;ben &quot;;<br>
+print &quot;Sinan.\n&quot;;
+</font>
+</ul>
+
+<p>
+Kodları aşağıdaki gibi bir çıktı verir.
+
+<p>
+<ul>
+<font face="courier new">
+Merhaba, ben Sinan.
+</font>
+</ul>
+
+<h3>Dosyaları Kapatma</h3>
+
+Dosya ile işiniz bittiği zaman dosyayı kapatmalısınız. Bunu aşağıdaki komutla yapabilirsiniz.
+
+<p>
+<ul>
+<font face="courier new">close(dosyadegiskeni);</font>
+</ul>
+
+<h3>Dosyalardan Bilgi Okuma</h3>
+
+Bir gün merak edip formla gönderilen bilgilerin bir özetini görmek isteyebilirsiniz. Bunun için programda bilgilerin kaydedildiği dosyayı açtırıp bütün kayıtları okutup gereken hesapları yaptırmalısınız.
+
+<p>
+Bir dosyadan bilgiyi okuturken ister tek bir satırı, isterseniz bütün dosyayı okuyabilirsiniz. İşte bir örnek:
+
+<ul>
+<font face="courier new">
+open(DOSYA,&quot;formbilgileri.txt&quot;) or &amp;hata(&quot;Dosya açılamadı.&quot;);<br>
+<br>
+$a = &lt;DOSYA&gt;;   # $a değişkenine dosyadan bir tek satır okur<br>
+@b = &lt;DOSYA&gt;;   # @b değişkenine dosyanın tamamını okur<br>
+<br>
+close(DOSYA);
+</font>
+</ul>
+
+<p>
+Bu kodlar &quot;formbilgileri.txt&quot; dosyasının ilk satırını <font face="courier new">$a</font> scalar değişkenine, geri kalan satırları <font face="courier new">@b</font> dizisine okur. Bu durumda <font face="courier new">@b</font> disizinin her bir elemanı bir satır olur. Her iki kod satırında da okutma işi <font face="courier new">&lt;DOSYA&gt;</font> koduyla yapılıyor. Dosyadan ne kadar bilgi okunacağını atanacağı değişkenin tipi belirliyor.
+
+<p>
+Aşağıdaki dosyanın tamamını bir diziye okuduktan sonra dosyanın içeriğini satır satır ekrana yazdırır.
+
+<p>
+<ul>
+<font face="courier new">
+open(DOSYA,&quot;formbilgileri.txt&quot;) or &amp;hata(&quot;Dosya açılamadı.&quot;);<br>
+@bilgiler = &lt;DOSYA&gt;;<br>
+close(DOSYA);<br>
+<br>
+foreach $satir (@bilgiler) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;chomp($satir);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print &quot;$satir\n&quot;;<br>
+}
+</font>
+</ul>
+
+<p>
+Bu kodlar dosyanın açık kalma süresini en aza indirir. Bu yüzden dosyadan bilgi okurken bu metodu kullanmanızı tavsiye ederim.
+
+<p>
+Şimdi &quot;formbilgileri.txt&quot; dosyasından bilgileri okuyup kaç kişinin formu gönderdiğini, siteye en çok hangi yolla ulaşıldığını, siteye verilen puanların ortalamasını, hangi bilgisayar alanıyla kaç kişinin ilgilendiğini ve yapılan yorumların listesi yazdıran bir CGI programı yazalım.
+
+<p>
+Şimdi &quot;ozet.cgi&quot; adında yeni bir dosya oluşturun ve içine şu kodları yazın:
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+<br>
+open(DOSYA,&quot;formbilgileri.txt&quot;) or &amp;hata(&quot;formbilgileri.txt dosyası açılamadı. Lütfen webmaster\@adres.com adresine mail atarak webmaster'a haber verin.&quot;);<br>
+<br>
+@bilgiler = &lt;DOSYA&gt;;<br>
+close(DOSYA);<br>
+<br>
+# Bilgileri özetlemek için önce bazı değişkenler hazırlanıyor.<br>
+$sayi = 0; # Formu gönderenlerin sayısı<br>
+$toplampuan = 0; # Verilen puanların toplamı<br>
+$yorumlar = &quot;&quot;; # Gönderilen bütün yorumlar<br>
+%nasilulasti_sayisi = (); # Hangi şekilde kaç kişinin ulaştığı<br>
+%ilgi = (); # Hangi bilgisayar alanıyla kaç kişinin ilgilendiğinin sayısı<br>
+<br>
+%nasilulasti = ( 0 =&gt; &quot;&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 =&gt; &quot;Direk adresini yazdım&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 =&gt; &quot;Siteyi bookmark etmiştim&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 =&gt; &quot;Arama motorundan buldum&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 =&gt; &quot;Başka bir siteden&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5 =&gt; &quot;Adresi bir kitaptan aldım&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6 =&gt; &quot;Diğer&quot; );<br>
+<br>
+foreach $i (@bilgiler) {<br>
+   chomp($i);<br>
+   ($isim,$email,$nasil,$puan,$secim,$yorum) = split(/\|/,$i);<br>
+<br>
+&nbsp;&nbsp;&nbsp;# Bu satır &quot;$sayi = $sayi + 1&quot; ile aynı işi görür.<br>
+&nbsp;&nbsp;&nbsp;$sayi++;<br>
+<br>
+&nbsp;&nbsp;&nbsp;$toplampuan = $toplampuan + $puan;<br>
+<br>
+&nbsp;&nbsp;&nbsp;# Bu satır $yorumlar değişkeninin sonuna $yorum değişkeninin<br>
+&nbsp;&nbsp;&nbsp;# içeriğini ekler. <br>
+<br>
+&nbsp;&nbsp;&nbsp;$yorumlar .= &quot;$yorum\n&quot;; <br>
+<br>
+&nbsp;&nbsp;&nbsp;$nasilulasti_sayisi{$nasil}++;<br>
+<br>
+&nbsp;&nbsp;&nbsp;@ilgilistesi = split(/,/,$secim);<br>
+&nbsp;&nbsp;&nbsp;foreach $j (@ilgilistesi) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$ilgi{$j}++;<br>
+&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+# Verilen puanlarınn ortalaması bulunuyor.<br>
+<br>
+if ($sayi &gt; 0) {               # Sıfıra bölmemek için<br>
+&nbsp;&nbsp;&nbsp;$ort_puan = int($toplampuan / $sayi);<br>
+} else {<br>
+&nbsp;&nbsp;&nbsp;$ort_puan = 0;<br>
+}<br>
+<br>
+# Sonuçları bildiren web sayfası hazırlanıyor.<br>
+<br>
+print &lt;&lt;HTMLSonu;<br>
+&lt;html&gt;&lt;head&gt;&lt;title&gt;Özet&lt;/title&gt;&lt;/head&gt;<br>
+&lt;body&gt;<br>
+&lt;h2&gt;Özet&lt;/h2&gt;<br>
+<br>
+Gönderilen form sayısı: $sayi&lt;p&gt;<br>
+<br>
+Verilen puanların ortalaması: $ort_puan&lt;p&gt;<br>
+<br>
+Siteye kaç kişinin ne şekilde ulaştığı:&lt;br&gt;<br>
+&lt;ul&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;(yanıtlamayan) - $nasilulasti_sayisi{0}<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;$nasilulasti{1} - $nasilulasti_sayisi{1}<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;$nasilulasti{2} - $nasilulasti_sayisi{2}<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;$nasilulasti{3} - $nasilulasti_sayisi{3}<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;$nasilulasti{4} - $nasilulasti_sayisi{4}<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;$nasilulasti{5} - $nasilulasti_sayisi{5}<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;$nasilulasti{6} - $nasilulasti_sayisi{6}<br>
+&lt;/ul&gt;<br>
+<br>
+Kaç kişinin hangi bilgisayar alanıyla ilgili olduğu:&lt;br&gt;<br>
+&lt;ul&gt;<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;Web Design: $ilgi{'wds'}<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;Web Server Yöneticiliği: $ilgi{'wsy'}<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;Electronic Commerce: $ilgi{'tic'}<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;Elektronik Ticaret: $ilgi{'tic'}<br>
+&nbsp;&nbsp;&nbsp;&lt;li&gt;İnternet Aracılığıyla Eğitim: $ilgi{'egt'}<br>
+&lt;/ul&gt;&lt;p&gt;<br>
+<br>
+Sayfa Hakkında Yorumlar:&lt;p&gt;<br>
+$yorumlar<br>
+<br>
+HTMLSonu<br>
+;<br>
+<br>
+sub hata {<br>
+&nbsp;&nbsp;&nbsp;($hatamesaji) = @_;<br>
+&nbsp;&nbsp;&nbsp;print &quot;&lt;h2&gt;Hata!&lt;/h2&gt;\n&quot;;<br>
+&nbsp;&nbsp;&nbsp;print $hatamesaji;<br>
+&nbsp;&nbsp;&nbsp;exit;<br>
+}
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="http://www.sinanilyas.com/cgi-bin/ornek/ozet.cgi" target="ornek">Denemek için tıklayın</a>
+
+<p><div align="center">
+
+<table border="0">
+<tr><td>
+<a href="bolum5.html">
+Önceki Sayfa
+</a>
+</td><td>
+<a href="index.html">
+Konulara Dön
+</a>
+</td><td>
+<a href="bolum7.html">
+Sonraki Sayfa
+</a>
+</td></tr>
+</table>
+			<!-- Gövde metni sonu -->
+
+			<p></p>
+			
+
+			<p style="text-align: center; font-size: 9px; margin-bottom: 0px;">
+			&copy;1997-2005, <a href="http://www.sinanilyas.com/hakkimda" onmouseover="window.status='Özgeçmiş'; return true;">Sinan İLYAS</a>
+			</p>
+		</td>
+		<td style="background: url(/grafik/cerceve-sag.gif); width: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol-alt.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-alt.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-alt.gif); width:29px; height: 29px;"></td>
+	</tr>
+</table>
+
+</body>
+
+</html>

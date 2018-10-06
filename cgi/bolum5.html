@@ -1,0 +1,523 @@
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<link rel="shortcut icon" href="/grafik/sinanilyas.ico">
+<title>[ www.sinanilyas.com ]</title>
+<link rel="stylesheet" type="text/css" href="/css/ortak.css">
+
+</head>
+
+<body>
+
+<table cellspacing="0" cellpadding="0" align="center" border="0" width= "99%">
+	<tr style="text-align: center;">
+		<td style="background: url(/grafik/cerceve-sol-ust.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-ust.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-ust.gif); width:29px; height: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol.gif); width: 29px;"></td>
+		<td style="padding-left: 10px; padding-right: 10px; padding-top: 30px; padding-bottom: 10px;">
+			<p class="sayfabasligi">Bölüm 5</p>
+
+			<!-- Gövde metni başlangıcı -->
+
+<p></p>
+
+Bir önceki bölümde form bilgilerinin kodlarının nasıl çözülecegini ve mail olarak gönderileceğini gördük. Fakat yazdığımız scriptte bir eksiklik vardı: Hata kontrolü. Eğer boş formlar almak istemiyorsanız ya da belli alanların mutlaka doldurulmasını istiyorsanız, hatta bir anket yapıyor ve verilen cevaba göre scriptinizin farklı işler yapmasını istiyorsanız şimdi yazacaklarımı dikkatlice okuyun.
+
+<p>
+Belli bir şartın doğru olup olmadığını kontrol etmek için <font face="courier new">if</font> blokunu kullanırız.
+
+<p>
+<ul>
+<font face="courier new">
+if ($degiskenadi eq "birseyler") {<br>
+&nbsp;&nbsp;# koşul doğruysa işletilecek komutlar<br>
+}<br>
+elsif ($degiskenadi eq "baskaseyler") {<br>
+&nbsp;&nbsp;# bu koşul doğruysa işletilecek komutlar<br>
+}<br>
+else {<br>
+&nbsp;&nbsp;# yukarıdaki koşulların hiçbiri doğru değilse işletilecek komutlar<br>
+}
+</font>
+</ul>
+
+<p>
+<font face="courier new">elsif</font> ve <font face="courier new">else</font> bloklarının konulması şart değildir. Sadece tek bir şartın doğruluğunu kontrol edecekseniz şu şekilde kullanabilirsiniz:
+
+<p>
+<ul>
+<font face="courier new">
+if ($varname > 23) {<br>
+&nbsp;&nbsp;# $sayi 23'ten büyükse işletilecek komutlar<br>
+}
+</font>
+</ul>
+
+<p>
+Perl'de değişkenin sayı ya da yazı oluşuna göre değişik karşılaştırma operatörleri vardır.
+
+<p>
+<div align="center">
+<table border="1">
+
+<tr><td align="center" width="180">
+<font face="tahoma" size="2"><b>Karşılaştırma İfadesi</b></font>
+</td><td align="center" width="90">
+<font face="tahoma" size="2"><b>Sayı İçin</b></font>
+</td><td align="center" width="90">
+<font face="tahoma" size="2"><b>Yazı İçin</b></font>
+</td></tr>
+
+<tr><td>
+<font face="courier new" size="2">&nbsp;$x eşittir $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x == $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x eq $y</font>
+</td></tr>
+
+<tr><td>
+<font face="courier new" size="2">&nbsp;$x eşit değildir $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x != $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x ne $y</font>
+</td></tr>
+
+<tr><td>
+<font face="courier new" size="2">&nbsp;$x büyüktür $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x > $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x gt $y</font>
+</td></tr>
+
+<tr><td>
+<font face="courier new" size="2">&nbsp;$x büyük eşittir $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x >= $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x ge $y</font>
+</td></tr>
+
+<tr><td>
+<font face="courier new" size="2">&nbsp;$x küçüktür $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x < $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x lt $y</font>
+</td></tr>
+
+<tr><td>
+<font face="courier new" size="2">&nbsp;$x küçük eşittir $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x <= $y</font>
+</td><td>
+<font face="courier new" size="2">&nbsp;$x le $y</font>
+</td></tr>
+
+</table>
+</div>
+
+<p>
+Farkettiğiniz gibi, yazıların karşılaştırılmasında karakter operatörler (<font face="courier new">eq</font>, <font face="courier new">ne</font>, vs.), sayıların karşılaştırılmasında işaret operatörler (<font face="courier new">==</font>, <font face="courier new">!=</font>, vs.) kullanılır.
+
+<p>
+Şimdi &quot;mail.cgi&quot; isimli scriptimizi açıp <font face="courier new">sendmail</font> programını açan satırın (<font face="courier new">open (MAIL, &quot;|$mailprog -t&quot;) or &amp;hata(&quot;$mailprog bulunamadı!\n&quot;);</font>) hemen öncesine şu kodları yerleştirin ve scripti &quot;mail2.cgi&quot; adıyla kaydedin.
+
+<p>
+<ul>
+<font face="courier new">
+if ($FORM{'isim'} eq &quot;&quot;) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&amp;hata(&quot;Lütfen isminizi yazın&quot;);<br>
+}
+</font>
+</ul>
+
+<p>
+Hata mesajının yazdırılmasında <font face="courier new">hata</font> alt programından faydalanılıyor. Scriptimize bu kodu eklemekle formunuzdaki isim alanının doldurulmasını zorunlu kılmış olduk. Aşağıdaki gibi birden fazla alanı da kontrol edebilirdik.
+
+<p>
+<ul>
+<font face="courier new">
+if ($FORM{'isim'} eq &quot;&quot; or $FORM{'email'} eq &quot;&quot; or $FORM{'yas'} eq &quot;&quot;) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&amp;hata(&quot;Lütfen isminizi, e-mail adresinizi ve yaşınızı yazın&quot;);<br>
+}
+</font>
+</ul>
+
+<p>
+Yukarıdaki kod &quot;isim&quot;, &quot;email&quot; ya da &quot;yas&quot; isimli alanların herhangi biri boş bırakıldığı takdirde hata mesajının yazdırılmasını sağlayacaktır. Koşullar <font face="courier new">or</font> operatörü ile ayrılmışlardır. (<font face="courier new">or</font> yerine <font face="courier new">||</font> da kullanılabilir.)
+
+<h3>Onay Kutuları</h3>
+
+Formdaki onay kutularının nasıl yazdırıldığını bir örnekle açıklayalım. İlk önce aşağıdaki kodlarla bir sayfa oluşturun ve &quot;renk.html&quot; adıyla kaydedin.
+
+<p>
+<ul>
+<font face="courier new">
+&lt;html&gt;&lt;head&gt;&lt;title&gt;Sevdiğiniz Renkler&lt;/title&gt;&lt;/head&gt;&lt;body&gt;<br>
+&lt;form action=&quot;http://www.sinanilyas.com/cgi-bin/ornek/renk.cgi&quot; method=&quot;POST&quot;&gt;<br>
+<br>
+&lt;h3&gt;Sevdiğiniz renkleri işaretleyin&lt;/h3&gt;<br>
+&lt;input type=&quot;checkbox&quot; name=&quot;kirmizi&quot; value=1&gt; Kırmızı&lt;br&gt;<br>
+&lt;input type=&quot;checkbox&quot; name=&quot;sari&quot; value=1&gt; Sarı&lt;br&gt;<br>
+&lt;input type=&quot;checkbox&quot; name=&quot;yesil&quot; value=1&gt; Yeşil&lt;br&gt;<br>
+&lt;input type=&quot;checkbox&quot; name=&quot;mavi&quot; value=1&gt; Mavi&lt;p&gt;<br>
+<br>
+&lt;input type=&quot;submit&quot; value=&quot;Gönder&quot;&gt;<br>
+<br>
+&lt;/form&gt;<br>
+&lt;/body&gt;&lt;/html&gt;
+</font>
+</ul>
+
+<p>
+Burada <font face="courier new">value</font> sıfatına istediğiniz değeri verebilirsiniz. Yukarıda CGI programında daha kısa kod yazabilmek için &quot;1&quot; değeri verilmiştir.
+
+<p>
+Şimdi de bu formun kodunu çözecek CGI programını yazalım.
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+<br>
+read(STDIN, $tampon, $ENV{'CONTENT_LENGTH'});<br>
+@ciftler = split(/&amp;/, $tampon);<br>
+foreach $cift (@ciftler) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;($isim, $deger) = split(/=/, $cift);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ tr/+/ /;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack(&quot;C&quot;, hex($1))/eg;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$FORM{$isim} = $deger;<br>
+}<br>
+<br>
+print &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Sonuçlar&lt;/title&gt;&lt;/head&gt;\n&quot;;<br>
+print &quot;&lt;body&gt;\n&quot;;<br>
+print &quot;&lt;h2&gt;Sonuçlar&lt;/h2&gt;\n&quot;;<br>
+<br>
+@renkler = (&quot;kirmizi&quot;,&quot;sari&quot;,&quot;yesil&quot;,&quot;mavi&quot;);<br>
+foreach $renk (@renkler) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if ($FORM{$renk} == 1) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print &quot;$renk rengini işaretlediniz&lt;br&gt;\n&quot;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+print &quot;&lt;/body&gt;&lt;/html&gt;\n&quot;;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/renk.html" target="ornek">Denemek için tıklayın</a>
+
+<h3>Radyo Düğmeleri</h3>
+
+Radyo düğmeleri onay kutularından biraz farklıdır. Form hazırlarken radyo düğmelerinin hepsinin <font face="courier new">name</font> sıfatına aynı değer atandığı için yazdırılması daha kolaydır. Bir örnek vererek bunu açıklayalım.
+
+<p>
+Aşağıdaki kodlarla bir sayfa hazırlayın ve &quot;renk2.html&quot; adıyla kaydedin.
+
+<ul>
+<font face="courier new">
+&lt;html&gt;&lt;head&gt;<br>
+&lt;title&gt;En Sevdiğiniz Renk&lt;/title&gt;<br>
+&lt;/head&gt;<br>
+&lt;body&gt;<br>
+&lt;form action=&quot;http://www.sinanilyas.com/cgi-bin/ornek/renk2.cgi&quot; method=&quot;POST&quot;&gt;<br>
+<br>
+&lt;h3&gt;İçlerinde en sevdiğiniz renk hangisi?&lt;/h3&gt;<br>
+&lt;input type=&quot;radio&quot; name=&quot;renk&quot; value=&quot;kirmizi&quot;&gt; Kırmızı&lt;br&gt;<br>
+&lt;input type=&quot;radio&quot; name=&quot;renk&quot; value=&quot;sari&quot;&gt; Sarı&lt;br&gt;<br>
+&lt;input type=&quot;radio&quot; name=&quot;renk&quot; value=&quot;yesil&quot;&gt; Yeşil&lt;br&gt;<br>
+&lt;input type=&quot;radio&quot; name=&quot;renk&quot; value=&quot;mavi&quot;&gt; Mavi&lt;p&gt;<br>
+<br>
+&lt;input type=&quot;submit&quot; value=&quot;Gönder&quot;&gt;<br>
+<br>
+&lt;/form&gt;<br>
+&lt;/body&gt;<br>
+&lt;/html&gt;
+</font>
+</ul>
+
+
+
+<p>
+Şimdi de aşağıdaki kodları yazın ve &quot;renk2.cgi&quot; adıyla kaydedin. (&quot;renk.cgi&quot;den tek farkının <font face="courier new">foreach</font> döngüsünün yerine konan <font face="courier new">print &quot;En sevdiğiniz renk: $FORM{'renk'}\n&quot;;</font> satırı olduğuna dikkat edin.)
+
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+<br>
+read(STDIN, $tampon, $ENV{'CONTENT_LENGTH'});<br>
+@ciftler = split(/&amp;/, $tampon);<br>
+foreach $cift (@ciftler) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;($isim, $deger) = split(/=/, $cift);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ tr/+/ /;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack(&quot;C&quot;, hex($1))/eg;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$FORM{$isim} = $deger;<br>
+}<br>
+<br>
+print &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Sonuçlar&lt;/title&gt;&lt;/head&gt;\n&quot;;<br>
+print &quot;&lt;body&gt;\n&quot;;<br>
+print &quot;&lt;h2&gt;Sonuçlar&lt;/h2&gt;\n&quot;;<br>
+<br>
+print &quot;En sevdiğiniz renk: $FORM{'renk'}\n&quot;;<br>
+<br>
+print &quot;&lt;/body&gt;&lt;/html&gt;\n&quot;;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/renk2.html" target="ornek">Denemek için tıklayın</a>
+
+<p>
+Scriptimizi bir adım daha geliştirerek ziyaretçiye sadece seçtiği rengi söylemekle kalmayıp aynı zamanda fon rengini seçilen renk yapacak şekilde değiştirelim.
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+<br>
+read(STDIN, $tampon, $ENV{'CONTENT_LENGTH'});<br>
+@ciftler = split(/&amp;/, $tampon);<br>
+foreach $cift (@ciftler) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;($isim, $deger) = split(/=/, $cift);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ tr/+/ /;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack(&quot;C&quot;, hex($1))/eg;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$FORM{$isim} = $deger;<br>
+}<br>
+<br>
+%renkler = (&quot;kirmizi&quot; =&gt; &quot;red&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;sari&quot; =&gt; &quot;yellow&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;yesil&quot; =&gt; &quot;green&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;mavi&quot; =&gt; &quot;blue&quot;);<br>
+print &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;En Sevdiğiniz Renk&lt;/title&gt;&lt;/head&gt;\n&quot;;<br>
+print &quot;&lt;body bgcolor=$renkler{$FORM{'renk'}}&gt;\n&quot;;<br>
+print &quot;&lt;h2&gt;En sevdiğiniz renk: $FORM{'renk'}&lt;/h2&gt;&lt;br&gt;\n&quot;;<br>
+print &quot;&lt;/body&gt;&lt;/html&gt;&quot;;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/renk2a.html" target="ornek">Denemek için tıklayın</a>
+
+<h3>Seçim Kutuları</h3>
+
+Seçim kutularının kodunun çözülmesi hemen hemen radyo butonları gibidir. Yine konunun daha iyi anlaşılması bakımından bir örnek verelim.
+
+<p>
+Aşağıdaki kod ile formu oluşturun ve sayfayı &quot;renk3.html&quot; adıyla kaydedin.
+
+<p>
+<ul>
+<font face="courier new">
+&lt;form action=&quot;http://www.sinanilyas.com/cgi-bin/ornek/renk2a.cgi&quot; method=&quot;POST&quot;&gt;<br>
+<br>
+&lt;select name=&quot;renk&quot;&gt; <br>
+&lt;option value=&quot;kirmizi&quot;&gt; Kırmızı<br>
+&lt;option value=&quot;sari&quot;&gt; Sarı<br>
+&lt;option value=&quot;yesil&quot;&gt; Yeşil<br>
+&lt;option value=&quot;mavi&quot;&gt; Mavi<br>
+&lt;/select&gt;&lt;p&gt;<br>
+<br>
+&lt;input type=&quot;submit&quot; value=&quot;Gönder&quot;&gt;<br>
+&lt;/form&gt;
+</font>
+</ul>
+
+<p>
+Seçim kutularının değerlendirilmesi radyo botonları ile aynı olduğundan yeni bir script yazmamıza gerek yok. Formumuzu &quot;renk2a.cgi&quot; scriptine gönderebiliriz.
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/renk3.html" target="ornek">Denemek için tıklayın</a>
+
+<p>
+<? include '../inc-yataycizgi.php'; ?>
+
+<p>
+Şu ana kadar öğrendiğimiz bilgilerle onay kutuları, radyo düğmeleri ve seçim kutuları içeren form bilgilerini web sayfasına yazan bir CGI scripti hazırlayabiliriz. O zaman ne duruyoruz? :) Hemen işe koyulalım.
+
+<p>
+Aşağıdaki kodlarla yeni bir HTML dosyası oluşturun ve &quot;form.html&quot; adıyla kaydedin.
+
+<p>
+<ul>
+<font face="courier new">
+&lt;html&gt;&lt;head&gt;&lt;title&gt;Form&lt;/title&gt;&lt;/head&gt;<br>
+&lt;body&gt;<br>
+&lt;form action=&quot;http://www.sinanilyas.com/cgi-bin/ornek/form.cgi&quot; method=&quot;POST&quot;&gt;<br>
+<br>
+İsminiz: &lt;input type=&quot;text&quot; name=&quot;isim&quot; size=30&gt;&lt;p&gt;<br>
+<br>
+E-mail adresiniz: &lt;input type=&quot;text&quot; name=&quot;email&quot; size=30&gt;&lt;p&gt;<br>
+<br>
+Bu siteye nasıl ulaştınız?<br>
+&lt;select name=&quot;nasilulasti&quot;&gt;<br>
+&lt;option value=0 selected&gt;Seçim yapın...<br>
+&lt;option value=1&gt;Direk adresini yazdım<br>
+&lt;option value=2&gt;Siteyi bookmark etmiştim<br>
+&lt;option value=3&gt;Arama motorundan buldum<br>
+&lt;option value=4&gt;Başka bir siteden<br>
+&lt;option value=5&gt;Adresi bir kitaptan aldım<br>
+&lt;option value=6&gt;Diğer<br>
+&lt;/select&gt;&lt;p&gt;<br>
+<br>
+Siteye 5 üzerinden kaç verirsiniz?&lt;br&gt;<br>
+&lt;input type=&quot;radio&quot; name=&quot;puan&quot; value=1&gt; 1<br>
+&lt;input type=&quot;radio&quot; name=&quot;puan&quot; value=2&gt; 2<br>
+&lt;input type=&quot;radio&quot; name=&quot;puan&quot; value=3&gt; 3<br>
+&lt;input type=&quot;radio&quot; name=&quot;puan&quot; value=4&gt; 4<br>
+&lt;input type=&quot;radio&quot; name=&quot;puan&quot; value=5&gt; 5&lt;p&gt;<br>
+<br>
+Aşağıdakilerden hangileriyle ilgilenirsiniz?&lt;br&gt;<br>
+&lt;input type=&quot;checkbox&quot; name=&quot;wds&quot; value=1&gt; Web Design&lt;br&gt;<br>
+&lt;input type=&quot;checkbox&quot; name=&quot;wsy&quot; value=1&gt; Web Server Yöneticiliği&lt;br&gt;<br>
+&lt;input type=&quot;checkbox&quot; name=&quot;tic&quot; value=1&gt; Elektronik Ticaret&lt;br&gt;<br>
+&lt;input type=&quot;checkbox&quot; name=&quot;als&quot; value=1&gt; İnternetten Alışveriş&lt;br&gt;<br>
+&lt;input type=&quot;checkbox&quot; name=&quot;egt&quot; value=1&gt; İnternet Aracılığıyla Eğitim&lt;br&gt;<br>
+&lt;p&gt;<br>
+<br>
+Sayfa hakkında yorumlarınız:&lt;br&gt;<br>
+&lt;textarea name=&quot;yorum&quot; rows=5 cols=70 wrap=&quot;virtual&quot;&gt;<br>
+&lt;/textarea&gt;<br>
+&lt;p&gt;<br>
+<br>
+&lt;input type=&quot;submit&quot; value=&quot;Gönder&quot;&gt;<br>
+&lt;input type=&quot;reset&quot; value=&quot;Tümünü Sil&quot;&gt;<br>
+&lt;/form&gt;<br>
+&lt;/body&gt;&lt;/html&gt;
+</font>
+</ul>
+
+<p>
+Şimdi de &quot;form.cgi&quot; programını yazalım.
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+<br>
+read(STDIN, $tampon, $ENV{'CONTENT_LENGTH'});<br>
+@ciftler = split(/&amp;/, $tampon);<br>
+foreach $cift (@ciftler) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;($isim, $deger) = split(/=/, $cift);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ tr/+/ /;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack(&quot;C&quot;, hex($1))/eg;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$FORM{$isim} = $deger;<br>
+}<br>
+<br>
+# &quot;Bu siteye nasıl ulaştınız?&quot; sorusunun cevabı<br>
+# numara olarak gönderildiği için bunu çevirebilmek<br>
+# için bir hash değişkene ihtiyacımız var<br>
+<br>
+%nasilulasti = ( 0 =&gt; &quot;&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 =&gt; &quot;Direk adresini yazdım&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 =&gt; &quot;Siteyi bookmark etmiştim&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 =&gt; &quot;Arama motorundan buldum&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 =&gt; &quot;Başka bir siteden&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5 =&gt; &quot;Adresi bir kitaptan aldım&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6 =&gt; &quot;Diğer&quot; );<br>
+<br>
+print &lt;&lt;HTMLBas;<br>
+&lt;html&gt;&lt;head&gt;&lt;title&gt;Sonuçlar&lt;/title&gt;&lt;/head&gt;<br>
+&lt;body&gt;<br>
+&lt;h2&gt;Sonuçlar&lt;/h2&gt;<br>
+<br>
+Formla gönderdiğiniz bilgiler aşağıdaki şekildedir:&lt;p&gt;<br>
+<br>
+İsminiz: $FORM{'isim'}&lt;p&gt;<br>
+<br>
+E-mail adresiniz: $FORM{'email'}&lt;p&gt;<br>
+<br>
+Siteye nasıl ulaştığınız: $nasilulasti{$FORM{'nasilulasti'}}&lt;p&gt;<br>
+<br>
+Siteye verdiğiniz puan: $FORM{'puan'}&lt;p&gt;<br>
+<br>
+HTMLBas<br>
+;<br>
+<br>
+%secim = (&quot;wds&quot; =&gt; &quot;Web Design&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;wsy&quot; =&gt; &quot;Web Server Yöneticiliği&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;tic&quot; =&gt; &quot;Elektronik Ticaret&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;als&quot; =&gt; &quot;İnternetten Alışveriş&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;egt&quot; =&gt; &quot;İnternet Aracılığıyla Eğitim&quot; );<br>
+<br>
+print &quot;Aşağıdaki konularla ilgileniyorsunuz:&lt;br&gt;\n&quot;;<br>
+foreach $anahtar (keys %secim) {<br>
+&nbsp;&nbsp;&nbsp;if ($FORM{$anahtar} == 1) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print &quot;$secim{$anahtar}&lt;br&gt;\n&quot;;<br>
+&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+print &lt;&lt;HTMLSon;<br>
+&lt;p&gt;<br>
+Sayfa hakkında yorumlarınız:&lt;br&gt;<br>
+$FORM{'yorum'}<br>
+&lt;p&gt;<br>
+&lt;/body&gt;&lt;/html&gt;<br>
+HTMLSon<br>
+;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/form.html" target="ornek">Denemek için tıklayın</a>
+
+<p>
+Eğer form bilgilerinin mail adresinize gönderilmesini istiyorsanız geçen bölümde öğrendiğiniz bilgilerle bunu yapabilirsiniz.
+
+<p><div align="center">
+
+<table border="0">
+<tr><td>
+<a href="bolum4.html">
+Önceki Sayfa
+</a>
+</td><td>
+<a href="index.html">
+Konulara Dön
+</a>
+</td><td>
+<a href="bolum6.html">
+Sonraki Sayfa
+</td></tr>
+</table>
+			<!-- Gövde metni sonu -->
+
+			<p></p>
+			
+
+			<p style="text-align: center; font-size: 9px; margin-bottom: 0px;">
+			&copy;1997-2005, <a href="http://www.sinanilyas.com/hakkimda" onmouseover="window.status='Özgeçmiş'; return true;">Sinan İLYAS</a>
+			</p>
+		</td>
+		<td style="background: url(/grafik/cerceve-sag.gif); width: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol-alt.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-alt.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-alt.gif); width:29px; height: 29px;"></td>
+	</tr>
+</table>
+
+</body>
+
+</html>

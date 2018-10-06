@@ -1,0 +1,373 @@
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<link rel="shortcut icon" href="/grafik/sinanilyas.ico">
+<title>[ www.sinanilyas.com ]</title>
+<link rel="stylesheet" type="text/css" href="/css/ortak.css">
+
+</head>
+
+<body>
+
+<table cellspacing="0" cellpadding="0" align="center" border="0" width= "99%">
+	<tr style="text-align: center;">
+		<td style="background: url(/grafik/cerceve-sol-ust.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-ust.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-ust.gif); width:29px; height: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol.gif); width: 29px;"></td>
+		<td style="padding-left: 10px; padding-right: 10px; padding-top: 30px; padding-bottom: 10px;">
+			<p class="sayfabasligi">Bölüm 2</p>
+
+			<!-- Gövde metni başlangıcı -->
+
+<p></p>
+
+Perl'de işe yarar programlar yazabilmek için Perl değişkenlerini tanımamız gerekir. Değişken demek, değerleri saklayacağımız yer demektir. Değişkene değer atadıktan sonra program boyunca bu değeri geri çağırabilir, kullanabilir ve değiştirebiliriz. Perl'de 3 çeşit değişken mevcuttur: Scalar, Array ve Hash değişkenler.
+
+<p>
+<font color="green" size=5>Scalar Değişkenler<font color="black" size=2>
+
+<p>
+Scalar değişkenlere tek bir değer atanır. Bu değer bir sayı, bir cümle ya da başka bir scalar değişken olabilir. Scalar değişkenlerin adlarının başında <font face="courier new">$</font> işareti bulunur. Örneğin <font face="courier new">$x, $y, $z, $adres, $kullanici</font> birer scalar değişken adıdır. Scalar değişkenlere değer atama işlemi de aşağıdaki örneklerde görüldüğü gibi yapılır.
+
+<p>
+<ul>
+<font face="courier new">
+$sayi = 1;<br>
+$isim = &quot;Sinan&quot;;<br>
+$pi = 3.141592;<br>
+</font>
+</ul>
+
+<p>
+Değişkenleri kullanmadan önce tanımlamanıza gerek yoktur. Ayrıca Perl değişkenleri program içinde tip de değiştirebilir. İşte bir örnek:
+
+<p>
+<ul>
+<font face="courier new">
+$sihir = 23;<br>
+$sihir = "Sihirli sayımız $sihir";
+</font>
+</ul>
+
+<p>
+Bazı programlama dillerinin tersine Perl bu durumu kabul eder ve bir hata mesajı vermez.
+
+<p>
+Şimdi ilkscript.pl isimli scripti biraz değiştirelim ve birkaç değişken ekleyelim:
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+$kursadi = &quot;CGI Programlama&quot;;<br>
+print &quot;Merhaba. Adın ne?\n&quot;;<br>
+$siz = &lt;STDIN&gt;;<br>
+chomp($siz);<br>
+print &quot;Merhaba $siz. $kursadi kursuna hoş geldiniz.\n&quot;;<br>
+</font>
+</ul>
+
+<p>
+Scripti kaydedin ve UNIX'te çalıştırın. Program size isminizi soracak ve birşeyler yazıp enter'a basmanızı bekleyecektir. Bu işlem
+
+<p>
+<ul>
+<font face="courier new">$siz = &lt;STDIN&gt;;</font>
+</ul>
+
+<p>
+satırı dolayısıyla gerçekleşir. Yazdığınız yazı <font face="courier new">$siz</font> değişkenine atanır. Yazdığınız yazının sonundaki enter tuşunu simgeleyen &quot;Carriage Return&quot; karakteri aşağıdaki komut satırı ile silinir.
+
+<p>
+<ul>
+<font face="courier new">chomp($siz);</font>
+</ul>
+
+<p>
+Aşağıdaki satır işletildiğinde değişkenlerin yerine atandığı değerler ekranınızda görünür. En sondaki <font face="courier new">\n</font> Per'de &quot;Carriage Return&quot; işaretini temsil eder. Yani programa, yazıyı yazdıktan sonra enter'a basmasını söyler.
+
+<p>
+<ul>
+<font face="courier new">print &quot;Merhaba $siz. $kursadi kursuna hoş geldiniz.\n&quot;;</font>
+</ul>
+
+<p>
+<font color="green" size=5>Array Değişkenler<font color="black" size=2>
+
+<p>
+Array'ın Türkçe karşılığı &quot;Dizi&quot;dir. Array değişkenler için değerler listesi diyebiliriz. Scalar değişkenler tek bir değer içermesine karşın array değişkenler birden fazla değer içerirler. Array değişken adlarının başında at işareti (<font face="courier new">@</font>) bulunur. İşte bir örnek:
+
+<p>
+<ul>
+<font face="courier new">@renkler = (&quot;sari&quot;,&quot;kirmizi&quot;,&quot;yesil&quot;);</font>
+</ul>
+
+Perl'de dizi indisleri 0'dan başlar. Yani <font face="courier new">@renkler</font> dizisinin ilk elemanını <font face="courier new">$renkler[0]</font> verir. <font face="courier new">@renkler</font> dizisinin tek bir elemanının değerini göstereceği zaman <font face="courier new">@</font> işareti yerine <font face="courier new">$</font> işareti kullanılır. <font face="courier new">$</font> işareti tek bir değeri, <font face="courier new">@</font> işareti ise bütün diziyi kastettiğimiz anlamına gelir.
+
+<p>
+Bir dizinin tüm elemanları şu şekilde yazdırılabilir:
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<p>
+# bu bir açıklamadır.<br>
+# diyez (#) işareti ile başlayan bütün satırlar açıklamadır.<p>
+@renkler = (&quot;sari&quot;,&quot;kirmizi&quot;,&quot;yesil&quot;);<p>
+print &quot;$renkler[0]\n&quot;;<br>
+print &quot;$renkler[1]\n&quot;;<br>
+print &quot;$renkler[2]\n&quot;;
+</font>
+</ul>
+
+<p>
+Fakat elbette ki bunu yapmanın daha kolay bir yolu var. <font face="courier new">foreach</font> yapısı kullanılarak dizileri rahatlıkla yazdırabiliriz.
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<p>
+# bu bir açıklamadır.<br>
+# diyez (#) işareti ile başlayan bütün satırlar açıklamadır.<p>
+@renkler = (&quot;sari&quot;,&quot;kirmizi&quot;,&quot;yesil&quot;);<p>
+foreach $i (@renkler) {<br>
+   print &quot;$i\n&quot;;<br>
+}
+</font>
+</ul>
+
+<p>
+<font face="courier new">foreach</font> döngüsünün her tekrarlanışında <font face="courier new">$i</font> değişkenine <font face="courier new">@renkler</font> dizisinin bir elemanı atanır. İlk tekrarda $i değişkeninin değeri &quot;sari&quot;, ikinci tekrarda &quot;kirmizi&quot; ve üçüncü tekrarda &quot;yesil&quot; olur. <font face="courier new">{</font> ve <font face="courier new">}</font> parantezleri döngünün başlangıç ve sonunu belirtir. Yani bu parantezler arasında kalan komutlar <font face="courier new">$i</font> değişkeninin bütün değerleri için tekrarlanır.
+
+<h3>Dizi Fonksiyonları</h3>
+
+Perl'de dizilere değer atamayı ve dizilerden değer okumayı kolaylaştıran fonksiyonlar mevcuttur.
+
+<p>
+<ul>
+<font face="courier new">
+@renkler = (&quot;sari&quot;,&quot;kirmizi&quot;,&quot;yesil&quot;,&quot;mavi&quot;,&quot;turuncu&quot;,&quot;bordo&quot;);<p>
+$ilkrenk = pop(@renkler);<br>
+# $ilkrenk değişkenine @renkler dizisinin ilk değeri olan &quot;sari&quot; atanır.<p>
+$sonrenk = shift(@renkler);<br>
+# $sonrenk değişkenine @renkler dizisinin son değeri olan &quot;bordo&quot; atanır.
+</font>
+</ul>
+
+<p>
+Bir diziye değer eklemek için <font face="courier new">push</font> fonksiyonu kullanılır:
+
+<p>
+<ul>
+<font face="courier new">
+push(@renkler,&quot;gri&quot;);<br>
+# @renkler dizisinin sonuna &quot;gri&quot; ilave edilir.<p>
+@yenirenkler = (&quot;lacivert&quot;,&quot;pembe&quot;);<p>
+push(@renkler,@yenirenkler);<br>
+# @yenirenkler dizisindeki değerler @renkler dizisinin sonuna ilave edilir.<p>
+</font>
+</ul>
+
+<p>
+Dizilerle ilgili işe yarayabilecek birkaç fonksiyon daha:
+
+<p>
+<ul>
+<font face="courier new">
+sort(@renkler);<br>
+# @renkler dizisinin elemanlarını alfabetik sıraya koyar.<p>
+reverse(@renkler);<br>
+# @renkler dizindeki elemanların diziliş sırasını ters çevirir.<p>
+@join(&quot;, &quot;,@renkler);<br>
+# @renkler dizisini elemanların arasında &quot;, &quot;  olacak şekilde birleştirir.<p>
+$uzunluk = $#renkler;<br>
+# $uzunluk değişkenine @renkler dizisinin uzunluğu atanır.
+</font>
+</ul>
+
+<p>
+<font color="green" size=5>Hash Değişkenler<font color="black" size=2>
+
+<p>
+Hash değişkenleri Array değişkenlerin özel bir hali olarak düşünebiliriz. Hash değişken adlarının başında yüzde işareti (<font face="courier new">%</font>) bulunur. Hash değişkenler öğe çiftlerinden oluşur: Anahtar ve Değer. Aşağıdaki örneği inceledikten sonra daha rahat anlayacağınızı tahmin ediyorum:
+
+<p>
+<ul>
+<table border="0" cellpadding="0" cellspacing="0">
+
+<tr>
+<td align="center" height="30"><font face="tahoma" size="2"><b>Değişken&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></td>
+<td align="center"><font face="tahoma" size="2"><b>Anahtar&nbsp;&nbsp;&nbsp;&nbsp;</b></font></td>
+<td align="center"><font face="tahoma" size="2"><b>Değer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></td>
+</tr>
+
+<tr>
+<td><font face="courier new" size="2">%sayfalar = (</font></td>
+<td><font face="courier new" size="2">&quot;sinan&quot;,</font></td>
+<td><font face="courier new" size="2">&quot;http://www.sinanilyas.com&quot;,</font></td>
+</tr>
+
+<tr>
+<td><font face="courier new" size="2">&nbsp;</font></td>
+<td><font face="courier new" size="2">&quot;koray&quot;,</font></td>
+<td><font face="courier new" size="2">&quot;http://cc.sau.edu.tr/~ktoksoz&quot;,</font></td>
+</tr>
+
+<tr>
+<td><font face="courier new" size="2">&nbsp;</font></td>
+<td><font face="courier new" size="2">&quot;baris&quot;,</font></td>
+<td><font face="courier new" size="2">&quot;http://turk.eu.org/uruzgar&quot;);</font></td>
+</tr>
+
+</table>
+</ul>
+
+<p>
+Aynı Hash şu şekilde de tanımlanabilir:
+
+<p>
+<ul>
+<table border="0" cellpadding="0" cellspacing="0">
+
+<tr>
+<td><font face="courier new" size="2">%sayfalar = (</font></td>
+<td><font face="courier new" size="2">&quot;sinan&quot; =>&nbsp;</font></td>
+<td><font face="courier new" size="2">&quot;http://www.sinanilyas.com&quot;,</font></td>
+</tr>
+
+<tr>
+<td><font face="courier new" size="2">&nbsp;</font></td>
+<td><font face="courier new" size="2">&quot;koray&quot; =>&nbsp;</font></td>
+<td><font face="courier new" size="2">&quot;http://cc.sau.edu.tr/~ktoksoz&quot;,</font></td>
+</tr>
+
+<tr>
+<td><font face="courier new" size="2">&nbsp;</font></td>
+<td><font face="courier new" size="2">&quot;baris&quot; =>&nbsp;</font></td>
+<td><font face="courier new" size="2">&quot;http://turk.eu.org/uruzgar&quot;);</font></td>
+</tr>
+
+</table>
+</ul>
+
+<p>
+<font face="courier new">%sayfalar</font> değişkeninde anahtar olarak kişinin ismini, değer olarak da web sayfasının adresi saklanır. Tıpkı Array'de olduğu gibi, bir Hash değişkenden tek bir değer okunacağı zaman <font face="courier new">$</font> işareti kullanılır.
+
+<p>
+<ul>
+<font face="courier new">print &quot;$sayfalar{'baris'}\n&quot;;</font>
+</ul>
+
+<p>
+Yukarıdaki satır Barış'ın web sayfasının adresini yazdırır. Eğer değişkendeki bütün değerleri yazdırmak istiyorsanız bir <font face="courier new">foreach</font> döngüsü kullanabilirsiniz:
+
+<p>
+<ul>
+<font face="courier new">
+foreach $anahtar (keys %sayfalar) {<br>
+&nbsp;&nbsp;&nbsp;print &quot;$anahtar'ın web sayfasının adresi: $sayfalar{$anahtar}\n&quot;;<br>
+}
+</font>
+</ul>
+
+<p>
+Bu örnekte <font face="courier new">%sayfalar</font> değişkeninin anahtarlarını öğrenebilmek için bir hash değişkeninin anahtarlarını dizi olarak veren <font face="courier new">keys</font> fonksiyonu kullanılmıştır. <font face="courier new">keys</font> fonksiyonunun tek bir dezavantajı vardır: Anahtarları rastgele bir sırayla vermesi. Yani bu örnekte kimin adresinin önce, kiminkinin sonra ekrana yazılacağı belli değildir. Adresleri belli bir sırayla yazdırmak istiyorsanız aşağıda gösterildiği gibi <font face="courier new">foreach</font> döngüsünde anahtarları kendiniz yazmalısınız.
+
+<p>
+<ul>
+<font face="courier new">
+foreach $anahtar (&quot;sinan&quot;,&quot;koray&quot;,&quot;baris&quot;) {<br>
+&nbsp;&nbsp;&nbsp;print &quot;$anahtar'ın web sayfasının adresi: $sayfalar{$anahtar}\n&quot;;<br>
+}
+</font>
+</ul>
+
+<p>
+Hash değişkenler formla gönderilen verileri ayırmada çok işimize yarayacak. Örneğin $form{'soyad'} bize formunuzdaki soyad kutucuğuna yazılan değeri verecek. Televizyoncuların deyimiyle: &quot;AZ SONRA!&quot; :)
+
+<p>
+Neyse, biz yine işimize bakalım ve adres listesi veren bir web sayfası üreten yeni bir CGI scripti yazalım. Tabi ki Hash değişken kullanarak.
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+<br>
+%sayfalar = (&quot;sinan&quot; =&gt; &quot;http://www.sinanilyas.com&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;koray&quot; =&gt; &quot;http://cc.sau.edu.tr/~ktoksoz&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;baris&quot; =&gt; &quot;http://turk.eu.org/uruzgar&quot; );<br>
+<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+<br>
+print &lt;&lt;IlkKisim;<br>
+&lt;html&gt;&lt;head&gt;&lt;title&gt;Adres Listesi&lt;/title&gt;&lt;/head&gt;<br>
+&lt;body&gt;<br>
+&lt;h2&gt;Adres Listesi&lt;/h2&gt;<br>
+&lt;ul&gt;<br>
+IlkKisim<br>
+;<br>
+<br>
+foreach $anahtar (keys %sayfalar) {<br>
+   print &quot;&lt;li&gt;&lt;a href=\&quot;$sayfalar{$anahtar}\&quot;&gt;$anahtar&lt;/a&gt;\n&quot;; <br>
+}<br>
+<br>
+print &lt;&lt;SonKisim;<br>
+&lt;/ul&gt;<br>
+&lt;p&gt;<br>
+&lt;/body&gt;<br>
+&lt;/html&gt;<br>
+SonKisim<br>
+;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="http://www.sinanilyas.com/cgi-bin/ornek/adreslistesi.cgi" target="ornek">Denemek için tıklayın</a>
+
+<p>
+Yukarıdaki scripti &quot;adreslistesi.cgi&quot; adıyla kaydedin ve çalıştırılabilmesi için erişim yetkilerini 755 olacak şekilde değiştirin. Sonra da web browser'ınızdan çağırın. Açılan sayfada isme tıkladığınız zaman o kişinin web sayfasının açıldığını göreceksiniz.
+
+<p><div align="center">
+
+<table border="0">
+<tr><td>
+<a href="bolum1.html">
+Önceki Sayfa
+</a>
+</td><td>
+<a href="index.html">
+Konulara Dön
+</a>
+</td><td>
+<a href="bolum3.html">
+Sonraki Sayfa
+</a>
+</td></tr>
+</table>
+			<!-- Gövde metni sonu -->
+
+			<p></p>
+			
+
+			<p style="text-align: center; font-size: 9px; margin-bottom: 0px;">
+			&copy;1997-2005, <a href="http://www.sinanilyas.com/hakkimda" onmouseover="window.status='Özgeçmiş'; return true;">Sinan İLYAS</a>
+			</p>
+		</td>
+		<td style="background: url(/grafik/cerceve-sag.gif); width: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol-alt.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-alt.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-alt.gif); width:29px; height: 29px;"></td>
+	</tr>
+</table>
+
+</body>
+
+</html>

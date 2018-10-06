@@ -1,0 +1,138 @@
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<link rel="shortcut icon" href="/grafik/sinanilyas.ico">
+<title>[ www.sinanilyas.com ]</title>
+<link rel="stylesheet" type="text/css" href="/css/ortak.css">
+
+</head>
+
+<body>
+
+<table cellspacing="0" cellpadding="0" align="center" border="0" width= "99%">
+	<tr style="text-align: center;">
+		<td style="background: url(/grafik/cerceve-sol-ust.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-ust.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-ust.gif); width:29px; height: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol.gif); width: 29px;"></td>
+		<td style="padding-left: 10px; padding-right: 10px; padding-top: 30px; padding-bottom: 10px;">
+			Perl ile CGI Programlama
+
+			<!-- Gövde metni başlangıcı -->
+
+<p></p>
+
+İnternette CGI programlama ile ilgili Türkçe bilgi bulmak çok zor. Bu yüzden 1999 yılında bu sayfayı hazırlamaya karar verdim ve <a href="http://www.cgi101.com" target="cgi101">www.cgi101.com</a> adresindeki sayfaları Türkçe'ye çevirdim. Ben bu çevirileri yaptıktan sonra orijinal sayfada değişiklikler ve güncellemeler olmuş olabilir. O yüzden buradaki bilgilerin kaynağı olan <a href="http://www.cgi101.com" target="cgi101">www.cgi101.com</a> sayfasını ziyaret etmenizi tavsiye ederim.
+<p>
+Bu notlar HTML bilen, fakat Perl ya da CGI programlama (hatta hiçbir programlama dili) bilmeyen kişilere yöneliktir. Amaç Perl ve CGI hakkında temel bilgi vermektir. Anlatım sırasında bol bol örnek verileceği için gayet rahat anlayacağınızı tahmin ediyorum.
+
+<p>
+<font color="green" size=5>Konular<font color="black" size=2>
+
+<p>
+Bölümleri sırasıyla takip etmenizi şiddetle tavsiye ediyorum. Çünkü konular tamamen birbirleriyle bağlantılı.
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> <a href="giris.html">Giriş</a> (CGI nedir? Neden CGI bilmeliyiz? Başlangıç için neler gerekli?)
+
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> <a href="bolum1.html">Bölüm 1: Başlangıç</a> (Scriptleri nerede yazacağız? UNIX sistemine nasıl upload edeceğiz? Erişim yetkilerinin değiştirilmesi ve ilk CGI scriptimiz.)
+
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> <a href="bolum2.html">Bölüm 2: Perl Değişkenleri</a> (Scalar, Array ve Hash değişkenler.)
+
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> <a href="bolum3.html">Bölüm 3: CGI Ortam Değişkenleri</a> (Ortam değişkenlerini kullanma ve GET metodu ile form hazırlama.)
+
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> <a href="bolum4.html">Bölüm 4: Form işleme</a> (POST metodu ile form hazırlamak. Bir form gönderme scripti.)
+
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> <a href="bolum5.html">Bölüm 5: İleri seviye formlar</a> (Radyo butonları, işaret kutuları, şeçim alanları)
+
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> <a href="bolum6.html">Bölüm 6: Dosya işlemleri</a> (Dosya erişim yetkileri, dosya açma, okuma, yazma ve kapatma)
+
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> <a href="bolum7.html">Bölüm 7: Dosyada metin arama</a> (Bir dosyanın içerisinde belli bir metni arama)
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> <a href="bolum8.html">Bölüm 8: Son birkaç söz</a> (Neler öğrendik, bu bilgilerle neler yapabiliriz, daha fazla bilgiyi nereden bulabilirim?)
+
+<p>
+<font color="green" size=5>Scriptler<font color="black" size=2>
+
+<p>
+İşinize yarayabilecek basit scriptler. İstediğiniz gibi değiştirebilir ve dağıtabilirsiniz.
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<font color="#0000A8"> Tarih ve Saat (1 KB) </font>
+<a href="scriptler/tarih.zip">
+Download</a><br>&nbsp;&nbsp;&nbsp;
+<img src="../grafik/ok-2.gif" width="13" height="15" align="absmiddle"> 
+Yerel tarih ve saati düzgün bir formatla verir.
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<font color="#0000A8"> Gizli Sayaç 1 (1 KB) </font>
+<a href="scriptler/gizlisayac1.zip">
+Download</a><br>&nbsp;&nbsp;&nbsp;
+<img src="../grafik/ok-2.gif" width="13" height="15" align="absmiddle"> 
+Ziyaretçinin IP'si bir önceki ziyaretçinin IP'sinden farklı ise bağlantı sayısını arttırır ve bir web sayfası açar. Script <font face="courier new">&lt;a href=&quot;/cgi-bin/gizlisayac1.cgi&quot;&gt;Giriş için tıklayın&lt;/a&gt;</font> kodlarıyla çağırılır. Ziyaretçi linke tıkladığı zaman belirttiğiniz sayfa açıldığı için bunun bir sayaç oldugunu farketmez.
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<font color="#0000A8"> Gizli Sayaç 2 (1 KB) </font>
+<a href="scriptler/gizlisayac2.zip">
+Download</a><br>&nbsp;&nbsp;&nbsp;
+<img src="../grafik/ok-2.gif" width="13" height="15" align="absmiddle"> 
+Ziyaretçinin IP'si bir önceki ziyaretçinin IP'sinden farklı ise bağlantı sayısını arttırır ve bir gif dosyası görüntüler. Script <font face="courier new">&lt;img src=&quot;/cgi-bin/gizlisayac2.cgi&quot;&gt;</font> kodlarıyla çağırılır. Bu kodların olduğu yerde belirttiğiniz gif resmi görüntülendiği için ziyaretçi sayfada bir sayaç olduğunu farketmez.
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<font color="#0000A8"> Form Gönderme 1 (1 KB) </font>
+<a href="scriptler/formgonderme1.zip">
+Download</a><br>&nbsp;&nbsp;&nbsp;
+<img src="../grafik/ok-2.gif" width="13" height="15" align="absmiddle"> 
+POST metodu ile gönderilen form bilgilerini belirtilen mail adresine gönderir ve bir teşekkür sayfası açar.
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<font color="#0000A8"> Yönlendirme (1 KB) </font>
+<a href="scriptler/yonlendirme.zip">
+Download</a><br>&nbsp;&nbsp;&nbsp;
+<img src="../grafik/ok-2.gif" width="13" height="15" align="absmiddle"> 
+Ziyaretçinin browser'ının tipine göre sayfa yönlendirmesi yapar.
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<font color="#0000A8"> Finger (1 KB) </font>
+<a href="scriptler/finger.zip">
+Download</a><br>&nbsp;&nbsp;&nbsp;
+<img src="../grafik/ok-2.gif" width="13" height="15" align="absmiddle"> 
+İstediğiniz UNIX komutunu işletir ve sonucu gösteren bir web sayfası açar.
+			<!-- Gövde metni sonu -->
+
+			<p></p>
+			
+
+			<p style="text-align: center; font-size: 9px; margin-bottom: 0px;">
+			&copy;1997-2005, <a href="http://www.sinanilyas.com/hakkimda" onmouseover="window.status='Özgeçmiş'; return true;">Sinan İLYAS</a>
+			</p>
+		</td>
+		<td style="background: url(/grafik/cerceve-sag.gif); width: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol-alt.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-alt.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-alt.gif); width:29px; height: 29px;"></td>
+	</tr>
+</table>
+
+</body>
+
+</html>

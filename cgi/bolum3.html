@@ -1,0 +1,318 @@
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<link rel="shortcut icon" href="/grafik/sinanilyas.ico">
+<title>[ www.sinanilyas.com ]</title>
+<link rel="stylesheet" type="text/css" href="/css/ortak.css">
+
+</head>
+
+<body>
+
+<table cellspacing="0" cellpadding="0" align="center" border="0" width= "99%">
+	<tr style="text-align: center;">
+		<td style="background: url(/grafik/cerceve-sol-ust.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-ust.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-ust.gif); width:29px; height: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol.gif); width: 29px;"></td>
+		<td style="padding-left: 10px; padding-right: 10px; padding-top: 30px; padding-bottom: 10px;">
+			<p class="sayfabasligi">Bölüm 3</p>
+
+			<!-- Gövde metni başlangıcı -->
+
+<p></p>
+
+Ortam değişkenleri CGI programı çalıştırılıdığı zaman browser'ınızın (ve web server'ınızın) programa gönderdiği bilgilerdir. Ortam değişkenleri <font face="courier new">%ENV</font> isimli Hash değişkende saklanır.
+
+<p>
+<table border="1">
+
+<tr><td colspan="2" height="30" valign="middle">
+<font face="tahoma" color="maroon" size="2"><b>&nbsp;CGI Ortam Değişkenleri</b></font>
+
+</td></tr><tr><td width="140">
+<font face="tahoma" size="2">&nbsp;DOCUMENT_ROOT</font>
+</td><td width="400">
+<font face="tahoma" size="2">&nbsp;Server'ınızın kök dizinini verir.</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;HTTP_COOKIE</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Eğer varsa ziyaretçinin &quot;cookie&quot;sini verir.</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;HTTP_HOST</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Server'ınızın &quot;hostname&quot;ini verir.</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;HTTP_REFERER</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Scriptin çağrıldığı sayfanın adresini verir.</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;HTTP_USER_AGENT</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Ziyaretçinin browser'ının tipini verir.</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;PATH</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Server'ınızın &quot;system path&quot;ini verir. (Genelde /bin, /usr/sbin vs.)</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;QUERY_STRING</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;GET metodu ile yollanan bilgiyi verir.</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;REMOTE_ADDR</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Ziyaretçinin IP adresini verir.</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;REMOTE_HOST</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Ziyaretçinin &quot;hostname&quot;ini verir. (*)</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;REMOTE_PORT</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Ziyaretçinin web server'ınıza bağlandığı portu verir.</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;REMOTE_USER</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Ziyaretçinin kullanıcı adını verir. (.htaccess korumalı sayfalar için)</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;REQUEST_METHOD</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Bilgi gönderme metodunu verir. (GET ya da POST)</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;SCRIPT_FILENAME</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Scriptin tam yolunu verir.</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;SERVER_ADMIN</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Server'ınızın webadmin'inin e-mail adresini verir.</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;SERVER_NAME</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Server'ınızın tam domain adını verir. (Örn: cc.sau.edu.tr)</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;SERVER_PORT</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Server'ınızın dinlemede olduğu portu verir.</font>
+
+</td></tr><tr><td>
+<font face="tahoma" size="2">&nbsp;SERVER_SOFTWARE</font>
+</td><td>
+<font face="tahoma" size="2">&nbsp;Serverdaki web server programını verir. (Örn: Apache 1.3)</font>
+</td></tr>
+
+</table>
+
+<p>
+(*) Eğer server'ınızda &quot;reverse-name-lookups&quot; yoksa REMOTE_HOST ziyaretçinin IP adresini verir.
+
+<p>
+Bazı server'larda bunlardan başka değişkenler de olabiliyor. Daha fazla bilgi için server'ınızın dökümanlarını inceleyiniz. Farketmişseniz bazı değişkenler server'la ilgili, bazıları ise ziyaretçi ile ilgili bilgileri içeriyor. Server'la ilgili olanların programa bildirdiği bilgiler o server'da çalışan bütün CGI programları için aynı olacaktır. Fakat ziyaretçi ile ilgili bilgiler program her çalıştırıldığında farklı olabilir.
+
+<p>
+Her CGI çalıştırıldığında bütün ortam değişkenleri atanmaz. REMOTE_USER değişkeni sadece .htaccess dosyası ile korunan dizin ya da altdizinler için atanır. Bu durumda REMOTE_USER değişkeninin alacağı değer .htaccess dosyasındaki kullanıcı adıdır.
+
+<p>
+<font face="courier new">%ENV</font> değişkeni CGI çalıştırıldığında otomatik olarak atanır ve isterseniz tamamını isterseniz sadece belli değerleri kullanabilirsiniz. Mesela aşağıdaki kod ile ziyaretçinin IP adresini yazdırabilirsiniz.
+
+<p>
+<ul>
+<font face="courier new">print &quot;IP adresiniz: $ENV{'REMOTE_ADDR'}\n&quot;;</font>
+</ul>
+
+<p>
+Şimdi bütün ortam değişkenlerini yazdıran bir CGI yazalım. Yeni bir dosya oluşturun, &quot;ortam.cgi&quot; adıyla kaydedin ve içine şunları yazın:
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+print &lt;&lt;HTMLSonu;<br>
+&lt;html&gt;&lt;head&gt;&lt;title&gt;Ortam Değişkenleri&lt;/title&gt;&lt;/head&gt;<br>
+&lt;body&gt;<br>
+HTMLSonu<br>
+;<br>
+<br>
+foreach $anahtar (sort(keys %ENV)) {<br>
+&nbsp;&nbsp;&nbsp;print &quot;$anahtar = $ENV{$anahtar}&lt;br&gt;\n&quot;;<br>
+}<br>
+<br>
+print &quot;&lt;/body&gt;&lt;/html&gt;&quot;;<br>
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="http://www.sinanilyas.com/cgi-bin/ornek/ortam.cgi" target="ornek">Denemek için tıklayın</a>
+
+<p>
+Scripti kaydedin, erişim yetkilerini 755 olarak ayarlayın ve browser'ınızdan çağırın. Eğer hata mesajı alırsanız programı UNIX'te çalışmayı deneyip hatanın nerede olduğunu öğrenebileceğinizi hatırlayın.
+
+<p>
+Bu örnekte <font face="courier new">sort</font> fonksiyonu kullanılarak <font face="courier new">%ENV</font> değişkeninin anahtarları alfabetik sıraya koyduk. Perl'ün <font face="courier new">sort</font> fonksiyonu karakter değerlerini karşılaştırdığı için sayıları düzgün bir şekilde sıraya koyamaz.
+
+<p>
+<h3>Basit Bir Sorgu Formu</h3>
+
+<p>
+Bir HTML formundan CGI'a bilgi göndermek için iki yol vardır. GET ve POST. Form bilgisinin server'a nasıl yollandığını bu <i>metodlar</i> belirler. GET metodunda formla gönderilen bilgiler URL'in bir parçası olarak gönderilir ve QUERY_STRING ortam değişkenine atanır. POST metodunda nasıl gönderildiğini bir sonraki bölümde anlatacağız.
+
+<p>
+QUERY_STRING değişkenine birkaç değişik yolla atama yapabiliriz. Birinci yöntem aşağıda görüldüğü gibidir.
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="http://www.sinanilyas.com/cgi-bin/ornek/ortam.cgi?deneme1" target="ornek">http://www.sinanilyas.com/cgi-bin/ornek/ortam.cgi?deneme1</a>
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="http://www.sinanilyas.com/cgi-bin/ornek/ortam.cgi?deneme2" target="ornek">http://www.sinanilyas.com/cgi-bin/ornek/ortam.cgi?deneme2</a>
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="http://www.sinanilyas.com/cgi-bin/ornek/ortam.cgi?deneme3" target="ornek">http://www.sinanilyas.com/cgi-bin/ornek/ortam.cgi?deneme3</a>
+
+<p>
+Yukarıdaki linklerin her birine tıklayın. QUERY_STRING değişkeninin değerinin soru işaretinden sonra gelen yazı olduğunu göreceksiniz. Bu örneklerde QUERY_STRING değişkeni &quot;deneme1&quot;,&quot;deneme2&quot; ve &quot;deneme3&quot; değerlerini alır.
+
+<p>
+Bir başka yöntem de aşağıdaki gibi basit bir form hazırlamaktır.
+
+<p>
+<ul>
+<font face="courier new">
+&lt;form action=&quot;http://www.sinanilyas.com/cgi-bin/ornek/ortam.cgi&quot; method=&quot;GET&quot;&gt;<br>
+Buraya birşeyler yazın: &lt;input type=&quot;text&quot; name=&quot;ornek_yazi&quot; size=30&gt;&lt;p&gt;<br>
+&lt;/form&gt;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/get.html" target="ornek">Denemek için tıklayın</a>
+
+<p>
+&quot;Gönder&quot; düğmesinin olmadığını farketmişsinizdir sanırım. GET metodu ile sadece enter'a basarsınız ve form gönderilir. (Bu yöntem sadece bir tane girdi alanı olduğu zaman işe yarar. Birden fazla girdi alanını göndermek için mutlaka &quot;Gönder&quot; düğmesi koymalısınız.)
+
+<p>
+Yukarıdaki kodları kullanarak bir HTML dosyası hazırlayın ve &quot;get.html&quot; adıyla kaydedip browser'ınızla açın. Daha sonra form alanına birşeyler yazın ve enter'a basın. QUERY_STRING değişkeninin değeri aşağıdaki gibi olur.
+
+<p>
+<ul>
+<font face="courier new">$ENV{'QUERY_STRING'} = ornek_yazi=iste+yazdiginiz+yazi</font>
+</ul>
+
+<p>
+Eşittir (=) işaretinin solundaki yazı form alanının adıdır. Sağındaki yazı ise formdaki kutucuğa yazdığınız yazıdır. FAKAT farkettiğiniz gibi boşlukların yerini artı (+) işareti almış. Hatta çeşitli noktalama işaretleri ve özel karakterlerin yerine %-kod şeklinde özel kodlar çıkmış.
+
+<p>
+Buna &quot;URL Kodlama&quot; denir ve ister GET metodu ister POST metodu kullanılsın, herhangi bir form ile bilgi gönderildiği zaman meydana gelir.
+
+<p>
+Perl scriptiniz bu bilgiyi eski haline getirebilir fakan uzun ve karmaşık bilgiler yollandığında POST metodunu kullanmak daha iyidir. GET metodu daha çok veritabanından bilgi aratma gibi tek alanlı formlar için elverişlidir.
+
+<p>
+GET metodu ile birden fazla alanlı formları da gönderebilirsiniz.
+
+<p>
+<ul>
+<font face="courier new">
+&lt;form action=&quot;http://www.sinanilyas.com/cgi-bin/ornek/ortam.cgi&quot; method=&quot;GET&quot;&gt;<br>
+&lt;pre&gt;<br>
+&nbsp;&nbsp;&nbsp;Adınız: &lt;input type=&quot;text&quot; name=&quot;ad&quot; size=30&gt;&lt;p&gt;<br>
+Soyadınız: &lt;input type=&quot;text&quot; name=&quot;soyad&quot; size=30&gt;&lt;p&gt;<br>
+&lt;/pre&gt;<br>
+&lt;input type=&quot;submit&quot; value=&quot;Gönder&quot;&gt;<br>
+&lt;/form&gt;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/get2.html" target="ornek">Denemek için tıklayın</a>
+
+<p>
+Bo formla gönderilen bilgiler aşağıdaki gibi görünür.
+
+<p>
+<ul>
+<font face="courier new">$ENV{'QUERY_STRING'} = ad=umut+baris&amp;soyad=ruzgar</font>
+</ul>
+
+<p>
+Değerler <font face="courier new">&amp;</font> işareti ile ayrılmıştır. Bu iki değeri birbirinden ayırmak için Perl'ün <font face="courier new">split</font> fonksiyonunu kullanacağız.
+
+<p>
+<ul>
+<font face="courier new">
+@degerler = split(/\&amp;/,$ENV{'QUERY_STRING'});<br>
+foreach $i (@degerler) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;($alanadi, $deger) = split(/=/,$i);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print &quot;$alanadi = $deger\n&quot;;<br>
+}
+</font>
+</ul>
+
+<p>
+<font face="courier new">split</font> fonksiyonu bir karakter sırasını, belirtilen karakter ya da karakterlerden ayırarak bir dizi oluşturur. Örneğimizin ilk satırında QUERY_STRING değişkeninin değeri <font face="courier new">&amp;</font> işaretinden ikiye ayrılmıştır. <font face="courier new">&amp;</font> işaretinden önce <font face="courier new">\</font> kullanılmasının nedeni <font face="courier new">&amp;</font> işaretinin Perl'de özel bir anlamı olmasıdır. (Perl'de bazı özel karakterleri kullanırken başına <font face="courier new">\</font> işareti koymamız gerekebilir). Bu ayırma işlemi sonucu <font face="courier new">@degerler</font> dizisine iki değer atanır: <font face="courier new">ad=umut+baris</font> ve <font face="courier new">soyad=ruzgar</font>. <font face="courier new">foreach</font> döngüsünde önce <font face="courier new">=</font> işaretinden alan adı ve alanlara yazılan yazılar birbirinden ayrılarak <font face="courier new">$alanadi</font> ve <font face="courier new">deger</font> değişkenlerine atanır. Sonra da birbirinden ayrılmış olan bu değerler yazdırılır.
+
+<p>
+GET metodu hakkında bazı uyarılar: Bu metod bilgi göndermek için güvenli değildir. Bu yüzden şifre ve kredi kartı bilgileri gibi gizli bilgileri gönderirken asla bu metodu kullanmayınız. Gönderilen bilgi URL'in bir parçası olarak gönderildiği için server'ın log dosyalarında kaydedilir ve log dosyaları da server'daki bütün kullanıcılar tarafından okunabilir. Gizli bilgiler bir sonraki bölümde göreceğimiz POST metodu ile güvenli bir biçimde gönderilebilir.
+
+<p><div align="center">
+
+<table border="0">
+<tr><td>
+<a href="bolum2.html">
+Önceki Sayfa
+</a>
+</td><td>
+<a href="index.html">
+Konulara Dön
+</a>
+</td><td>
+<a href="bolum4.html">
+Sonraki Sayfa
+</a>
+</td></tr>
+</table>
+			<!-- Gövde metni sonu -->
+
+			<p></p>
+			
+
+			<p style="text-align: center; font-size: 9px; margin-bottom: 0px;">
+			&copy;1997-2005, <a href="http://www.sinanilyas.com/hakkimda" onmouseover="window.status='Özgeçmiş'; return true;">Sinan İLYAS</a>
+			</p>
+		</td>
+		<td style="background: url(/grafik/cerceve-sag.gif); width: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol-alt.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-alt.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-alt.gif); width:29px; height: 29px;"></td>
+	</tr>
+</table>
+
+</body>
+
+</html>

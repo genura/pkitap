@@ -1,0 +1,271 @@
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<link rel="shortcut icon" href="/grafik/sinanilyas.ico">
+<title>[ www.sinanilyas.com ]</title>
+<link rel="stylesheet" type="text/css" href="/css/ortak.css">
+
+</head>
+
+<body>
+
+<table cellspacing="0" cellpadding="0" align="center" border="0" width= "99%">
+	<tr style="text-align: center;">
+		<td style="background: url(/grafik/cerceve-sol-ust.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-ust.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-ust.gif); width:29px; height: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol.gif); width: 29px;"></td>
+		<td style="padding-left: 10px; padding-right: 10px; padding-top: 30px; padding-bottom: 10px;">
+			<p class="sayfabasligi">Bölüm 1</p>
+
+			<!-- Gövde metni başlangıcı -->
+
+<p></p>
+
+Programlama dili olarak Perl'ü seçtik, çünkü basit bir dil, kolay öğreniliyor ve karmaşık problemleri halledebilecek kadar da güçlü. Ayrıca hem ücretsiz hem de bulunması çok kolay. Zaten çok büyük bir ihtimalle UNIX server'ınızda ya da NT makinenizde kuruludur. Yine de download etmeniz gerekiyorsa <a href="http://www.perl.com" target="perl">www.perl.com</a>'u ziyaret ediniz. Perl ile yazdığınız scriptleri derlemenize gerek yoktur. Scriplerinizi yazar ve çalıştırırsınız (Daha doğrusu web server'ınız çalıştırır). Script kendi başına sadece text kodudur. Aslında bütün işi web server'ınızda kurulu olan Perl yorumlayıcısı yapar. Bunun size sağladığı avantaj yazdığınız scriptleri ya hiçbir değişiklik yapmadan ya da çok küçük bir iki değişiklikle istediğiniz servera kopyalayabilecek olmanız. Dezavantajı ise scripti çalıştırmadan hatalı olup olmadığını anlayamamanız.
+
+<p>
+Perl scriptlerinizi kendi bilgisayarınızda istediğiniz text editörü ile (Notepad, SimpleText vb.) ya da UNIX'te yazabilirsiniz. UNIX kullanıyorsanız pico'yu deneyin. Basit ve kullanımı kolay bir text editörü. UNIX komut satırında <font face="courier new">pico &lt;dosya adı&gt;</font> yazarak yeni bir dosya ya da varolan bir dosyayı açabilirsiniz. Pico ile ilgili daha fazla bilgi almak için <font face="courier new">man pico</font> yazınız.
+
+<p>
+Scriptlerinizi kendi makinenizde yazıp FTP ile gönderecekseniz dikkat etmeniz gereken husus binary değil ASCII olarak göndermek. CuteFTP kullanıyorsanız sorun yok. Ama WS FTP programı Perl dosyaları için genelde ASCII değil binary kullanıyor.
+
+<p>
+Scriptlerinizi server'ınızda CGI scriptlerini çalıştırabileceğiniz dizine (public_html ya da /home/httpd/cgi-bin olabilir) upload etmelisiniz. Başka bir dizine upload etmişseniz daha sonra da taşıma işlemini yapabilirsiniz. UNIX'te taşıma işlemini şu komutla yapabilirsiniz:
+
+<ul>
+<font face="courier new">mv &lt;taşınacak dosya&gt; &lt;taşınacağı dizin&gt;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Daha fazla bilgi için <font face="courier new">man mv</font>)
+</ul>
+
+<p>
+Scriptinizi gerekli dizine taşıdıktan sonra bu dosyayı &quot;çalıştırılabilir&quot; hale getirmeniz gerekir. Bunun için kullanmanız gereken komut:
+
+<p>
+<ul>
+<font face="courier new">chmod 755 &lt;dosya adı&gt;</font>
+</ul>
+
+<p>
+Bu komut dosyanın sizin tarafınızdan okunabilir, yazılabilir ve çalıştırılabilir, diğer bütün kullanıcılar tarafından da okunabilir ve çalıştırılabilir hale getirilmesini sağlar.
+
+<p>
+Aynı işi çoğu FTP programı ile yapabilirsiniz. Fakat dikkat etmeniz gereken kısım bütün kullanıcılara okuma ve çalıştırma hakkı vermek ve tabi ki sadece kendinize yazma hakkı vermek.
+
+<p>
+<b>Son bir not:</b> UNIX ve Perl'de büyük küçük harf ayrımı vardır. Yani UNIX'te &quot;perl&quot; ile &quot;PERL&quot; aynı şey değildir. Bu yüzden Caps Lock tuşunuza dikkat edin :)
+
+<p>
+<font color="green" size=5>Perl Scriptinin Temelleri<font color="black" size=2>
+
+<p>
+Bir HTML dosyasının yapısında &lt;head&gt; ve &lt;body&gt; etiketlerinin mutlaka bulunması gerektiği gibi bir Perl scriptinin ilk satırında
+
+<p>
+<ul>
+<font face="courier new">#!/usr/bin/perl</font>
+</ul>
+
+<p>
+satırının mutlaka bulunması gerekir. Bu satır server'a bu dosyanın bir Perl scripti olduğunu ve Perl'ün nerede olduğunu söyler. Bu satır sisteminizde Perl'ün nerede olduğuna bağlı olarak değişebilir. Bunu öğrenmenin en emin yolu <font face="courier new">which perl</font> ya da <font face="courier new">whereis perl</font> komutunu kullanmaktır. Perl sisteminizde kurulu ise Perl'ün hangi dizinde olduğu yazacaktır.
+
+<p>
+Server'a Perl'ün yerini tanıttıktan sonra Perl kodlarınızı yazabilirsiniz. Hatırlamanız gereken önemli bir konu Perl'de büyük küçük harf ayrımının olduğu. Yani Perl için &quot;x&quot; ile &quot;X&quot; aynı şeyler değildir. Ayrıca çoğu Perl kodunun sonunda noktalı virgül (;) kullanmalısınız (Bazı döngü ve özel yapılar hariç).
+
+<p>
+Şimdi birlikte ilk scriptimizi yazalım. Yeni bir dosya oluşturun ve şunları yazın. (Daha iyi aklınızda kalması açısından Kopyala - Yapıştır yöntemini kullanmamanızı tavsiye ederim.)
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+print &quot;Merhaba\n&quot;;
+</font>
+</ul>
+
+<p>
+Bu dosyayı &quot;ilkscript.pl&quot; adıyla kaydedin ve UNIX komut satırında şunu yazın:
+
+<p>
+<ul>
+<font face="courier new">chmod 755 ilkscript.pl</font>
+</ul>
+
+<p>
+Bu komut dosyanın erişim yetkilerini değiştirerek onu çalıştırılabileceğiniz hale getirir. Bunu her yeni script yazışınızda yapmanız gerekir. Fakat varolan bir dosya üzerinde değişiklik yaptığınız zaman bu komutu vermenize gerek yoktur.
+
+<p>
+Şimdi, yazdığınız scripti çalıştırmanız için vermeniz gereken komut:
+
+<p>
+<ul>
+<font face="courier new">./ilkscript.pl</font>
+</ul>
+
+<p>
+Eğer herşey yolunda gitmişse ekranda &quot;Merhaba&quot; yazması gerekir.
+
+<p>
+<table border="1" bgcolor="#FEFEDE" cellpadding="8">
+<tr><td width="500">
+<font face="tahoma" size="2">
+<font color="navy"><b>&nbsp;Olmadı mı?</b></font>
+<p>
+Eğer scriptiniz çalışmazsa şunları kontrol edin:
+<p>
+<font color="navy"><b>1.</b></font> Scriptinizi ASCII olarak upload ettiniz mi?
+<p>
+<font color="navy"><b>2.</b></font> Scriptinizin ilk satırı <font face="courier new">#!/usr/bin/perl</font> mü?
+<p>
+<font color="navy"><b>3.</b></font> Perl'ün yeri gerçekten <font face="courier new">#!/usr/bin/perl</font> mü yoksa başka bir dizinde mi? Perl'ün nerede olduğunu <font face="courier new">which perl</font> ya da <font face="courier new">whereis perl</font> yazarak bulabilirsiniz.
+</font>
+</td></tr>
+</table>
+
+<p>
+<font color="green" size=5>CGI Scriptinin Temelleri<font color="black" size=2>
+
+<p>
+CGI programları aynı zamanda birer Perl scriptidir. Fakat aralarındaki önemli bir fark CGI programlarının genelde bir web sayfası üretmesidir. Örneğin bir form gönderildikten sonra mesajın gönderildiğine dair yeni bir sayfa açılır. Eğer yazdığınız script bir HTML sayfası oluşturacaksa herhangi bir yazı yazdırmadan önce
+
+<p>
+<ul>
+<font face="courier new">print "Content-type:text/html\n\n";</font>
+</ul>
+
+<p>
+satırını mutlaka yazmalısınız. Unutulması ihtimaline karşı en başa yazılması daha iyi olur (<font face="courier new">#!/usr/bin/perl</font> satırından sonra tabi).
+
+<p>
+Bu satır web browser'ınıza kendisine gönderilecek bilginin bir HTML sayfası olduğunu söyler. Eğer bu satırı yazmayı unutursanız ya da bu satırdan önce başka birşey yazdırırsanız browser &lt;Internal Server Error&gt; (Dahili Server Hatası) verir.
+
+<p>
+Şimdi yaptığımız Perl scriptini biraz değiştirelim ve web sayfası gösteren bir CGI scriptine çevirelim.
+
+<p>
+Önce dosyanın uzantısını .cgi olarak değiştirelim. UNIX'te bunu
+
+<p>
+<ul>
+<font face="courier new">mv ilkscript.pl ilkcgi.cgi</font>
+</ul>
+
+<p>
+komutunu vererek yapabilirsiniz. Daha sonra bu dosyanın içeriğini şu şekilde değiştirin:
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<p>
+print "Content-type:text/html\n\n";<p>
+print "&lt;html&gt;&lt;head&gt;&lt;title&gt;Deneme Sayfası&lt;/title&gt;&lt;/head&gt;\n";<br>
+print "&lt;body&gt;\n";<br>
+print "&lt;h2&gt;Merhaba&lt;/h2&gt;\n";<br>
+print "&lt;/body&gt;&lt;/html&gt;\n";
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="http://www.sinanilyas.com/cgi-bin/ornek/ilkcgi.cgi" target="ornek">Denemek için tıklayın</a>
+
+<p>
+Eğer scriptinizdeki değişiklikleri UNIX üzerinde yapmışsanız erişim yetkilerini tekrar düzenlemenize gerek yoktur. Ama kendi bilgisayarınızda yazıp upload etmişseniz <font face="courier new">chmod 755 ilkcgi.cgi</font> komutunu verip erişim yetkilerini değiştirin ve <font face="courier new">./ilkcgi.cgi</font> komutu ile scriptinizi çalıştırın. Ekrana HTML kodları gelecektir. AMA eğer yazdığınız kodlarda bir hata varsa o zaman ekranda hatanın kaçıncı satırda olduğu yazar. Bu da özellikle uzun ve karmaşık scriptler yazarken olası hatayı düzeltmemizde bize oldukça kolaylık sağlar.
+
+<p>
+Şimdi de browser'ınızın adres satırına tam adresini yazarak scriptinizi çağırın. Browser'ınızda &quot;Merhaba&quot; yazdığını göreceksiniz.
+
+<p>
+<table border="1" bgcolor="#FEFEDE" cellpadding="8">
+<tr><td width="500">
+<font face="tahoma" size="2">
+<font color="navy"><b>Olmadı mı?</b></font>
+<p>
+Scriptinizin çalışmamasının nedeni şunlar olabilir:
+<p>
+<font color="navy"><b>1.</b></font> Eğer karşınıza &quot;Merhaba&quot; yerine Perl kodları çıkmışsa scriptin uzantısını .cgi olatak değiştirmemiş olabilirsiniz. Ya da scriptin bulunduğu dizin CGI programlarını çalıştıracak şekilde ayarlanmamıştır (CGI scriptlerinizi hangi dizinde çalıştırabileceğinizi server'ınızın yöneticisine sormalısınız).
+<p>
+<font color="navy"><b>2.</b></font> Browser'ınız &quot;Internal Server Error&quot; hatası veriyorsa scriptinizi <font face="courier new">./ilkcgi.cgi</font> komutu ile çalıştırın. Ekranda hatanın nerede olduğu yazacaktır.
+</font>
+</td></tr>
+</table>
+
+<p>
+Yukarıdaki scripti şu şekilde yazarsak her satırda <font face="courier new">print</font> yazmaktan kurtuluruz:
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<p>
+print "Content-type:text/html\n\n";<p>
+print &lt;&lt;HTMLSonu;<br>
+&lt;html&gt;&lt;head&gt;&lt;title&gt;Deneme Sayfası&lt;/title&gt;&lt;/head&gt;<br>
+&lt;body&gt;<br>
+&lt;h2&gt;Merhaba&lt;/h2&gt;<br>
+&lt;/body&gt;&lt;/html&gt;<p>
+HTMLSonu<br>
+;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="http://www.sinanilyas.com/cgi-bin/ornek/ilkcgi2.cgi" target="ornek">Denemek için tıklayın</a>
+
+<p>
+<font face="courier new">print &lt;&lt;HTMLSonu;</font> satırında <font face="courier new">&lt;&lt;</font> ile <font face="courier new">HtmlSonu</font> arasında boşluk olmadığına dikkat edin.
+
+<p>
+Bu sayfada Perl kodları, daha anlaşılır olması açısından satır girintileri kullanarak yazılmıştır. Perl kodlarını yazarken mutlaka ilk sütundan başlayarak yazılmalıdır. Özellikle <font face="courier new">HTMLSonu</font> satırından önce kesinlikle boşluk bırakılmamalıdır. Eğer bırakılırsa scriptiniz çalışmaz.
+
+<p>
+HTML kodlarını bu yöntemle yazdırırsak aşağıdaki örnekte olduğu gibi <font face="courier new">print</font> komutunu kullanırken iç içe çift tırnak (&quot;) karakteri kullanmak zorunda olduğumuz zaman çift tırnaktan önce ters bölü (\) karakteri yazmak zorunda kalmayız.
+
+<p>
+<ul>
+<font face="courier new">print &quot;&lt;a href=\&quot;http://www.sinanilyas.com/\&quot;&gt;&quot;</font>
+</ul>
+
+<p>
+<font face="courier new">print</font> komutunda iç içe tırnak karakterleri kullanmak için yukarıdaki gibi çift tırnaktan önce ters bölü karakterini yazmak zorundayız.
+
+<p><div align="center">
+
+<table border="0">
+<tr><td>
+<a href="giris.html">
+Önceki Sayfa
+</a>
+</td><td>
+<a href="index.html">
+Konulara Dön
+</a>
+</td><td>
+<a href="bolum2.html">
+Sonraki Sayfa
+</a>
+</td></tr>
+</table>
+			<!-- Gövde metni sonu -->
+
+			<p></p>
+			
+
+			<p style="text-align: center; font-size: 9px; margin-bottom: 0px;">
+			&copy;1997-2005, <a href="http://www.sinanilyas.com/hakkimda" onmouseover="window.status='Özgeçmiş'; return true;">Sinan İLYAS</a>
+			</p>
+		</td>
+		<td style="background: url(/grafik/cerceve-sag.gif); width: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol-alt.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-alt.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-alt.gif); width:29px; height: 29px;"></td>
+	</tr>
+</table>
+
+</body>
+
+</html>

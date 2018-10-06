@@ -1,0 +1,131 @@
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<link rel="shortcut icon" href="/grafik/sinanilyas.ico">
+<title>[ www.sinanilyas.com ]</title>
+<link rel="stylesheet" type="text/css" href="/css/ortak.css">
+
+</head>
+
+<body>
+
+<table cellspacing="0" cellpadding="0" align="center" border="0" width= "99%">
+	<tr style="text-align: center;">
+		<td style="background: url(/grafik/cerceve-sol-ust.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-ust.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-ust.gif); width:29px; height: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol.gif); width: 29px;"></td>
+		<td style="padding-left: 10px; padding-right: 10px; padding-top: 30px; padding-bottom: 10px;">
+			<p class="sayfabasligi">Giriş</p>
+
+			<!-- Gövde metni başlangıcı -->
+
+<p></p>
+
+<font color="green" size=5>CGI Nedir?<font color="black" size=2>
+
+<p>
+CGI'nin uzun hali &quot;Common Gateway Interface&quot;dir. Türkçesi &quot;Web Server'a Ortak Çıkış Kapısı&quot; gibi birşey oluyor. CGI, server'ın veritabanlarına, dökümanlara ve diğer programlara bilgi gönderebileceği (veya alabileceği), ve bu bilgiyi web üzerinden kullanıcılara sunabileceği bir metoddur. Kısaca web için programlama diyebiliriz yani. CGI programları değişik dillerde yazılabilir. Ama en popüleri Perl'dür ve biz Perl'ü anlatacağız.
+
+<p>
+<font color="green" size=5>Neden CGI bilmeliyiz?<font color="black" size=2>
+
+<p>
+Bir web sayfası hazırlıyorsanız, sayfanızın kaç kişi tarafından ziyaret edildiğini bilmek, ya da sayfanızda ziyaretçilerin düşüncelerini mail adresinize gönderebileceği bir form olmasını istersiniz. Bugün profesyonelce hazırlanan web sayfaları form gönderme ve sayaç gibi basit scriptlerden tutun da karmaşık veritabanı scriptlerine varana kadar birçok değişik scriptle desteklenmektedir. Kısacası günümüzde CGI bilmek bir ayrıcalıktır.
+
+<p>
+<font color="green" size=5>Başlangıç için neler gerekli?<font color="black" size=2>
+
+<p>
+Her ne kadar UNIX sistemi üzerinde Perl ile CGI programlamayı anlatacak olsak da başlangıç için UNIX bilgisine sahip olmanız gerekmiyor. Çünkü zaten bilmeniz gereken kısmı burada size anlatılacak. UNIX bilgisi gerekli değil dedik ama, tabi ki bir UNIX accountunuzun olması, ya da perl desteği olan bir web sunucusunda kullanıcı hesabınızın olması gerekiyor. Eğer böyle bir kullanıcı hesabınız yoksa kendinize <a href="http://www.virtualave.net" target="virtualave">http://www.virtualave.net</a> sitesinden ücretsiz web alanı açabilirsiniz. Bu konuda daha ayrıntılı bilgi edinmek için web sitesini ziyaret ediniz.
+
+<p>
+Eğer UNIX değil de Windows NT kullanıyorsanız yine de buradaki programların çoğunu çalıştırabilir ve Perl öğrenebilirsiniz. Çoğu NT makinesi UNIX makinesinin çalıştırdığı kodları çalıştırabilir. Ama örneklerimizden bazıları  UNIX'e özel yazıldığı için makinenizde çalışmayacaktır. Daha fazla bilgi için perl.com'un <a href="http://reference.perl.com/query.cgi?windows" target="perl">Perl Resources For Windows</a> (Windows İçin Perl Kaynakları) listesini gözden geçirin.
+
+<p>
+Scriptlerinizi Windows kurulu bir bilgisayarda çalıştırmak için <a href="http://www.activestate.com/ActivePerl/download.htm" target="activeperl">http://www.activestate.com/ActivePerl/download.htm</a> adresinden ActivePerl'ü indirebilirsiniz. Eğer yazdığınız scriptleri UNIX sistemine göndermeden önce kendi bilgisayarınızda denemek istiyorsanız bu programı mutlaka indirin.
+
+<p>
+UNIX sistemine telnet ile bağlanacağımız için bir telnet programına ihtiyacınız olacak tabi. Windows'la birlikte gelen basit telnet programı da işinizi görür. Windows kullanıcısı değilseniz ya da başka bir program kullanmak istiyorsanız tavsiye edeceğim program:
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+Macintosh için: <a href="ftp://ftp.ncsa.uiuc.edu/Mac/Telnet/Telnet2.6" target="ncsa">NCSA Telnet</a>
+
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+Windows için: <a href="http://www.vandyke.com" target="crt">CRT</a>
+
+<p>
+Eğer scriptlerinizi kendi bilgisayarınızda yazıp gönderecekseniz tavsiye edeceğim program:
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+Macintosh için: <a href="ftp://ftp.tidbits.com/pub/tidbits/select/fetch.hqx" target="fetch">Fetch</a>
+
+<br>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+Windows için: <a href="http://www.globalscape.com" target="cuteftp">CuteFTP</a>
+
+<p>
+Vereceğimiz bütün örnekler zip dosyası olarak mevcuttur ve download edebilirsiniz. Fakat iyi öğrenebilmeniz için örnek scriptleri kendiniz yazmanızı tavsiye ederim.
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/ornekler.zip">Tüm örneklerin kaynak kodlarını indirmek için tıklayın</a> (13 KB)
+
+<p>
+Okuma kolaylığı açısından Perl ve HTML kodlarını sabit genişlikli bir font kullanarak yazacağım. Mesela:
+
+<p>
+<ul>
+<font face="courier new">print "Bu bir Perl kodu.\n";</font>
+</ul>
+
+<p>
+Ayrıca UNIX komut satırında yazmanız gereken komutları anlatırken &lt;Dosya Adı&gt; gibi &lt; ve &gt; karakterleri arasında yazacağım kısımları kendinize uygun şekilde değiştirmeniz gerekecek. Örneğin <font face="courier new">chmod 755 &lt;dosya adı&gt;</font> dediğim zaman yapmanız gereken dosyanızın adı sayac.cgi ise komut satırında <font face="courier new">chmod 755 sayac.cgi</font> yazmak.
+
+<p>
+Sanırım bu kadar hazırlık yeterli. Şimdi ilk bölüme geçebiliriz.
+
+
+<p><div align="center">
+
+<table border="0">
+<tr><td>
+Önceki Sayfa
+</td><td>
+<a href="index.html">
+Konulara Dön
+</a>
+</td><td>
+<a href="bolum1.html">
+Sonraki Sayfa
+</a>
+</td></tr>
+</table>
+			<!-- Gövde metni sonu -->
+
+			<p></p>
+			
+
+			<p style="text-align: center; font-size: 9px; margin-bottom: 0px;">
+			&copy;1997-2005, <a href="http://www.sinanilyas.com/hakkimda" onmouseover="window.status='Özgeçmiş'; return true;">Sinan İLYAS</a>
+			</p>
+		</td>
+		<td style="background: url(/grafik/cerceve-sag.gif); width: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol-alt.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-alt.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-alt.gif); width:29px; height: 29px;"></td>
+	</tr>
+</table>
+
+</body>
+
+</html>

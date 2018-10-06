@@ -1,0 +1,375 @@
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<link rel="shortcut icon" href="/grafik/sinanilyas.ico">
+<title>[ www.sinanilyas.com ]</title>
+<link rel="stylesheet" type="text/css" href="/css/ortak.css">
+
+</head>
+
+<body>
+
+<table cellspacing="0" cellpadding="0" align="center" border="0" width= "99%">
+	<tr style="text-align: center;">
+		<td style="background: url(/grafik/cerceve-sol-ust.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-ust.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-ust.gif); width:29px; height: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol.gif); width: 29px;"></td>
+		<td style="padding-left: 10px; padding-right: 10px; padding-top: 30px; padding-bottom: 10px;">
+			<p class="sayfabasligi">Bölüm 4</p>
+
+			<!-- Gövde metni başlangıcı -->
+
+<p></p>
+
+POST metodunda bilgiler URL ile birlikte gönderilmediği GET metodundan daha güvenlidir. POST metodunun GET metoduna bir diğer üstünlüğü de daha fazla bilgi gönderebilmesidir. Ayrıca, GET metodu ile gönderilen bilgiler web browser, web server ya da proxy server'ın kaşe belleğinde (cache) saklanabilir fakat POST metodu ile bilgiler her defasında yeniden gönderilir. Dezavantajı ise POST ile gönderilen bilgiler daha karmaşık olacağından dolayı bu bilgileri çözmek için daha biraz daha karmaşık bir kod yazmamız gerekir.
+
+<p>
+Web server, form bilgilerini CGI programına kodlayarak gönderir. Alfanumerik karakterler olduğu gibi gönderilir; boşluklar artı (+) işaretine çevrilir; tab, çift tırnak (&quot;) gibi özel işaretler de &quot;%HH&quot; şeklinde kodlanır. Burada &quot;HH&quot; karakterin ASCII karşılığının hexadesimal (16'lık sistemdeki) değeridir. Bu kodlama işlemine &quot;URL kodlama&quot; denir. Aşağıdaki tabloda sık kullanılan bazı karakterlerin kodlanmış karşılıklarını görebilirsiniz.
+
+<p>
+<div align="center">
+<table border="1">
+
+<tr><td align="center" width="100">
+<font face="tahoma" size="2"><b>Normal<br>Karakter</b></font>
+</td><td align="center" width="100">
+<font face="tahoma" size="2"><b>Kodlanmış<br>Hali</b></font>
+</td></tr>
+
+<tr><td align="center">
+<font face="courier new" size="2">&nbsp;\n (enter)</font>
+</td><td align="center">
+<font face="courier new" size="2">&nbsp;%0A</font>
+</td></tr>
+
+<tr><td align="center">
+<font face="courier new" size="2">&nbsp;\t (tab)</font>
+</td><td align="center">
+<font face="courier new" size="2">&nbsp;%09</font>
+</td></tr>
+
+<tr><td align="center">
+<font face="courier new" size="2">&nbsp;/</font>
+</td><td align="center">
+<font face="courier new" size="2">&nbsp;%2F</font>
+</td></tr>
+
+<tr><td align="center">
+<font face="courier new" size="2">&nbsp;~</font>
+</td><td align="center">
+<font face="courier new" size="2">&nbsp;%7E</font>
+</td></tr>
+
+<tr><td align="center">
+<font face="courier new" size="2">&nbsp;:</font>
+</td><td align="center">
+<font face="courier new" size="2">&nbsp;%3A</font>
+</td></tr>
+
+<tr><td align="center">
+<font face="courier new" size="2">&nbsp;;</font>
+</td><td align="center">
+<font face="courier new" size="2">&nbsp;%3B</font>
+</td></tr>
+
+<tr><td align="center">
+<font face="courier new" size="2">&nbsp;@</font>
+</td><td align="center">
+<font face="courier new" size="2">&nbsp;%40</font>
+</td></tr>
+
+<tr><td align="center">
+<font face="courier new" size="2">&nbsp;&amp;</font>
+</td><td align="center">
+<font face="courier new" size="2">&nbsp;%26</font>
+</td></tr>
+
+</table>
+</div>
+
+<p>
+Gönderilen bilgiyle işe yarar şeyler yapabilmek için CGI bu kodlanmış bilgiyi çözmelidir. Neyse ki Perl'de <font face="courier new">substitute</font> ve <font face="courier new">translate</font> komutlarıyla bunu yapmak oldukça kolaydır. Perl, karakter içerisinde arama yapma ve değiştirme konusunda oldukça yeteneklidir. <font face="courier new">substitute</font> komutunun temel yazılış biçimi aşağıdaki gibidir.
+
+<ul>
+<font face="courier new">$yazi =~ s/aranan/yerinekonan/;</font>
+</ul>
+
+<p>
+Bu örnek <font face="courier new">$yazi</font> scalar değişkeninde <font face="courier new">aranan</font> kelimesinin yerine <font face="courier new">yerinekonan</font> kelimesini koyar. Araya konan operatör <font face="courier new">=~</font> (eşittir ve yanında tilde) işaretidir.
+<p>
+Daha iyi anlaşılacağını düşündüğüm başka bir örnek:
+
+<ul>
+<font face="courier new">
+$selamlama = "Merhaba. Benim adım xisimx.\n";<br>
+$selamlama =~ s/xnamex/Sinan/;<br>
+print $selamlama;
+</font>
+</ul>
+
+<p>
+Yukarıdaki örnek &quot;Merhaba. Benim adım Sinan.&quot; yazdıracaktır. <font face="courier new">$selamlama</font> değişkeninde &quot;xisimx&quot;in yerini &quot;Sinan&quot;ın aldığına dikkat edin.
+
+<p>
+Buna yakın fakat bir parça farklı bir komut da <font face="courier new">translate</font> komutudur.
+
+<p>
+<ul>
+<font face="courier new">$yazi =~ tr/arananlistesi/yerinekonanlistesi/;</font>
+</ul>
+
+<p>
+Bu komut &quot;arananlistesi&quot;ndeki bütün karakterleri &quot;yerinekonan&quot; listesindekilerle değiştirir. İşte bir örnek:
+
+<p>
+<ul>
+<font face="courier new">$kucukh =~ tr/[A-Z]/[a-z]/;</font>
+</ul>
+
+<p>
+Bu örnek bütün yazıyı küçük harfe çevirir. <font face="courier new">[A-Z]</font>'deki parantezler karşılaştırılacak karakter sınıfını belirtir.
+
+<p>
+Şimdi tekrar formlara dönelim. Formla gönderilen bilginin kodunu çözmeniz için bilgide iki değişiklik yapmalısınız:
+
+<p>
+<ul>
+<font face="courier new">$value =~ tr/+/ /;<br>
+$value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack(&quot;C&quot;, hex($1))/eg;
+</font>
+</ul>
+
+<p>
+İlk satırda <font face="courier new">+</font> işaretleri boşluğa çevrilir. İkinci satırda ise <font face="courier new">pack()</font> fonksiyonu kullanılarak <font face="courier new">%HH</font> hex çiftleri ASCII karşılıklarına çevrilir.
+
+<p>
+Şimdi &quot;post.cgi&quot; adında yeni bir CGI hazırlayalım.
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+<br>
+read(STDIN, $tampon, $ENV{'CONTENT_LENGTH'});<br>
+@ciftler = split(/&/, $tampon);<br>
+foreach $cift (@ciftler) {<br>
+&nbsp;&nbsp;&nbsp;($isim, $deger) = split(/=/, $cift);<br>
+&nbsp;&nbsp;&nbsp;$deger =~ tr/+/ /;<br>
+&nbsp;&nbsp;&nbsp;$deger =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack(&quot;C&quot;, hex($1))/eg;<br>
+&nbsp;&nbsp;&nbsp;$FORM{$isim} = $deger;<br>
+}<br>
+<br>
+print &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Form Bilgileri&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;;<br>
+print &quot;&lt;h2&gt;Formla gönderilen bilgiler:&lt;/h2&gt;\n&quot;;<br>
+<br>
+foreach $anahtar (keys(%FORM)) {<br>
+&nbsp;&nbsp;&nbsp;print &quot;$anahtar = $FORM{$anahtar}&lt;br&gt;&quot;;<br>
+}<br>
+<br>
+print &quot;&lt;/body&gt;&lt;/html&gt;&quot;;
+</font>
+</ul>
+
+<p>
+Şimdi yukarıdaki kodları açıklayalım. Form ile gönderilen bilgi önce <font face="courier new">$tampon</font> scalar değişkenine okunuyor. Sonra <font face="courier new">&amp;</font> işaretlerinden ayrılarak elde edilen &quot;formdegiskeni=deger&quot; şeklindeki form alanı bilgileri <font face="courier new">@ciftler</font> dizisine yerleştiriliyor. Sonra <font face="courier new">foreach</font> döngüsünde herbir form alanı bilgisi <font face="courier new">=</font> işaretinden ayrılıyor ve URL kodu çözülerek <font face="courier new">%FORM</font> Hash değişkenine atanıyor. <font face="courier new">%FORM</font> değişkenindeki anahtar adları form alanının adıdır. Mesela <font face="courier new">&lt;input type=&quot;text&quot; name=&quot;<b>ad</b>&quot; size=30&gt;</font> HTML kodunda koyu yazılan &quot;ad&quot; değeri form alanının adıdır. Formunuzda &quot;ad&quot; ve &quot;soyad&quot; isimli iki form alanı varsa scriptinizde bu değerleri <font face="courier new">$FORM{'ad'}</font> ve <font face="courier new">$FORM{'soyad'}</font> şeklinde kullanabilirsiniz.
+
+<p>
+Aşağıdaki örneği inceleyerek <font face="courier new">split</font> fonksiyonunun nasıl çalıştığını hatırlayalım.
+
+<p>
+<ul>
+<font face="courier new">
+$yazi = &quot;sari&amp;kirmizi&amp;yesil&quot;;<br>
+@renkler = split(/&amp;/,$yazi);
+</font>
+</ul>
+
+<p>
+<font face="courier new">@renkler</font> değişkeninin yeni değeri (&quot;sari&quot;,&quot;kirmizi&quot;,&quot;yesil&quot;) olur.
+
+<p>
+Şimdi de scriptimizi denemeye geldi sıra. Form için aşağıdaki kodları kullanarak bir HTML dosyası oluşturun ve &quot;post.html&quot; adıyla kaydedin.
+<p>
+<ul>
+<font face="courier new">
+&lt;form action=&quot;http://www.sinanilyas.com/cgi-bin/ornek/post.cgi&quot; method=&quot;POST&quot;&gt;<br>
+&lt;pre&gt;<br>
+&nbsp;&nbsp;&nbsp;Adınız: &lt;input type=&quot;text&quot; name=&quot;ad&quot; size=30&gt;&lt;br&gt;<br>
+Soyadınız: &lt;input type=&quot;text&quot; name=&quot;soyad&quot; size=30&gt;&lt;br&gt;<br>
+&lt;/pre&gt;<br>
+&lt;input type=&quot;submit&quot; value=&quot;Gönder&quot;&gt;<br>
+&lt;input type=&quot;reset&quot; value=&quot;Tümünü Sil&quot;&gt;<br>
+&lt;/form&gt;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/post.html" target="ornek">Denemek için tıklayın</a>
+
+<p>
+İsterseniz scriptimizi biraz daha geliştirelim. Scriptimiz form bilgilerini 
+mail adresimize göndersin. İlk önce sistemimizde sendmail programının nerede olduğunu bulalım. Bunu öğrenmek için <font face="courier new">which sendmail</font> ya da <font face="courier new">whereis sendmail</font> komutunu kullanabilirsiniz. (sinanilyas.com için bu programın yeri /usr/sbin/sendmail olduğundan örneklerimizde bu şekilde kullanacağız. Eğer sizin server'ınızda farklı bir yerde ise kendi server'ınızdaki yerini yazmanız gerekir.)
+
+<p>
+<b>Not:</b> <font face="courier new">@</font> işaretini çift tırnak arasında ya da <font face="courier new">print &lt;&lt;HTMLSonu</font> bloğunda kullanırken önüne <font face="courier new">&quot;mail\@adres.com&quot;</font> örneğindeki gibi <font face="courier new">\</font> işareti koymalısınız. Tek tırnak arasında <font face="courier new">'mail@adres.com'</font> örneğinde olduğu gibi <font face="courier new">\</font> işareti koymadan güvenle kullanabilirsiniz.
+
+<p>
+<ul>
+<font face="courier new">
+#!/usr/bin/perl<br>
+<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+<br>
+read(STDIN, $tampon, $ENV{'CONTENT_LENGTH'});<br>
+@ciftler = split(/&amp;/, $tampon);<br>
+foreach $cift (@ciftler) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;($isim, $deger) = split(/=/, $cift);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ tr/+/ /;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$deger =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack(&quot;C&quot;, hex($1))/eg;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$FORM{$isim} = $deger;<br>
+}<br>
+<br>
+$mailprog = '/usr/sbin/sendmail';<br>
+<br>
+# bunu kendi mail adresinizle değiştirin<br>
+<br>
+$gonderilen = 'mail@adres.com';<br>
+<br>
+# burada maili göndermek üzere sendmail programı açılıyor<br>
+# eğer sendmail programı bulunamazsa hata alt programı (en altta)<br>
+# işletilerek programın bulunamadığı yazıyor<br>
+<br>
+open (MAIL, &quot;|$mailprog -t&quot;) or &amp;hata(&quot;$mailprog bulunamadı!\n&quot;);<br>
+<br>
+# sendmail programına mailin kime gönderileceği bildiriliyor<br>
+<br>
+print MAIL &quot;To: $gonderilen\n&quot;;<br>
+<br>
+# sendmail programına ziyaretçinin email adresi bildiriliyor.<br>
+# bu &quot;Yanıtla&quot; tuşuna bastığınızda işe yarar<br>
+# kullanmak zorunda değilsiniz<br>
+# formunuzda 'email' ve 'isim' kutularının bulunduğu varsayılmıştır.<br>
+<br>
+print MAIL &quot;Reply-to: $FORM{'email'}\n&quot;;<br>
+<br>
+# sendmail programına mailin konusu gönderiliyor<br>
+# konudan sonra iki tane \n olduğuna dikkat edin<br>
+<br>
+print MAIL &quot;Subject: Form Bilgileri\n\n&quot;;<br>
+<br>
+# sendmail programına form bilgileri gönderiliyor<br>
+<br>
+foreach $anahtar (keys(%FORM)) {<br>
+&nbsp;&nbsp;&nbsp;print MAIL &quot;$anahtar = $FORM{$anahtar}\n&quot;;<br>
+}<br>
+<br>
+# bilgiler gönderildikten sonra sendmail programını kapatmayı unutmayın<br>
+<br>
+close(MAIL);<br>
+<br>
+# teşekkür sayfası oluşturuluyor<br>
+<br>
+print &lt;&lt;HTMLSonu;<br>
+&lt;html&gt;&lt;head&gt;&lt;title&gt;Teşekkürler&lt;/title&gt;&lt;/head&gt;&lt;body&gt;<br>
+&lt;h2&gt;Teşekkürler&lt;/h2&gt;<br>
+Mailiniz gönderildi. Formu gönderdiğiniz için teşekkürler&lt;p&gt;<br>
+&lt;/body&gt;&lt;/html&gt;<br>
+HTMLSonu<br>
+;<br>
+<br>
+# hata alt programı<br>
+<br>
+sub hata {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;($hatamesaji) = @_;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Hata!&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print &quot;&lt;h2&gt;Hata&lt;/h2&gt;\n&quot;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print &quot;$hatamesaji&lt;p&gt;\n&quot;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print &quot;&lt;/body&gt;&lt;/html&gt;\n&quot;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exit;<br>
+}
+</font>
+</ul>
+
+<p>
+Yukarıdaki scriptte yeni bir yapı kullandık: <font face="courier new">hata</font> isimli bir &quot;alt program&quot;. Alt programlar programların sadece çağırıldıkları zaman işletilen komutlarıdır diyebiliriz. Örneğimizde <font face="courier new">hata</font> alt programı sadece sendmail programı bulunamazsa çalıştırılır. Programınızın bu durumda size bir server hatası vermesi yerine neyin yanlış gittiğine dair bilgi vermesini istersiniz. <font face="courier new">hata</font> alt programıyla bu yapılıyor. sendmail programının bulunmadığını bildiren bir web sayfası gösteriyor ve Perl'den çıkıyor. Perl'de alt programlar <font face="courier new">&amp;altprogramadi</font> ya da <font face="courier new">&amp;atlprogramadi (argümanlar)</font> şeklinde çağrılır. Argümanlar alt programa gönderilen değerlerdir.
+
+<p>
+Şimdi aşağıdaki kodlarla bir form oluşturun ve scripti deneyin.
+
+<p>
+<ul>
+<font face="courier new">
+&lt;form action=&quot;http://www.sinanilyas.com/cgi-bin/ornek/mail.cgi&quot; method=&quot;POST&quot;&gt;<br>
+&lt;pre&gt;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adınız: &lt;input type=&quot;text&quot; name=&quot;isim&quot; size=30&gt;<br>
+E-mail adresiniz: &lt;input type=&quot;text&quot; name=&quot;email&quot; size=30&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Web sayfanız: &lt;input type=&quot;text&quot; name=&quot;web_sayfasi&quot; size=30&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yaşınız: &lt;input type=&quot;text&quot; name=&quot;yas&quot; size=3&gt;<br>
+&lt;/pre&gt;<br>
+&lt;input type=&quot;submit&quot; value=&quot;Gönder&quot;&gt;<br>
+&lt;input type=&quot;reset&quot; value=&quot;Tümünü Sil&quot;&gt;<br>
+&lt;/form&gt;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/mail.html" target="ornek">Denemek için tıklayın</a>
+
+<p>
+Eğer herşey yolunda giderse birkaç dakika sonra form bilgileri e-mail adresine gelecektir.
+
+<p>
+Eğer form bilgilerini birkaç adrese birden göndermek istiyorsanız adresleri aşağıdaki gibi aralarına virgül koyarak yazabilirsiniz.
+
+<p>
+<ul>
+<font face="courier new">$gonderilen = 'mail@adres.com, mail2@adres2.com, mail3@adres3.com';</font>
+</ul>
+
+<p><div align="center">
+
+<table border="0">
+<tr><td>
+<a href="bolum3.html">
+Önceki Sayfa
+</a>
+</td><td>
+<a href="index.html">
+Konulara Dön
+</a>
+</td><td>
+<a href="bolum5.html">
+Sonraki Sayfa
+</td></tr>
+</table>
+			<!-- Gövde metni sonu -->
+
+			<p></p>
+			
+
+			<p style="text-align: center; font-size: 9px; margin-bottom: 0px;">
+			&copy;1997-2005, <a href="http://www.sinanilyas.com/hakkimda" onmouseover="window.status='Özgeçmiş'; return true;">Sinan İLYAS</a>
+			</p>
+		</td>
+		<td style="background: url(/grafik/cerceve-sag.gif); width: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol-alt.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-alt.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-alt.gif); width:29px; height: 29px;"></td>
+	</tr>
+</table>
+
+</body>
+
+</html>

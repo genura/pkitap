@@ -1,0 +1,248 @@
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<link rel="shortcut icon" href="/grafik/sinanilyas.ico">
+<title>[ www.sinanilyas.com ]</title>
+<link rel="stylesheet" type="text/css" href="/css/ortak.css">
+
+</head>
+
+<body>
+
+<table cellspacing="0" cellpadding="0" align="center" border="0" width= "99%">
+	<tr style="text-align: center;">
+		<td style="background: url(/grafik/cerceve-sol-ust.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-ust.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-ust.gif); width:29px; height: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol.gif); width: 29px;"></td>
+		<td style="padding-left: 10px; padding-right: 10px; padding-top: 30px; padding-bottom: 10px;">
+			<p class="sayfabasligi">Bölüm 7</p>
+
+			<!-- Gövde metni başlangıcı -->
+
+<p></p>
+
+Bu bölümde bir dosyanın içerisinde belli bir metni nasıl aratabileceğimizi anlatacağım. Eğer bütün sitede arama yaptırmak istiyorsanız bunu kendiniz yapmanızı tavsiye etmem. Bunun için <a href="http://glimpse.cs.arizona.edu/" target="glimpse">Glimpse</a> ve <a href="http://sunsite.berkeley.edu/SWISH-E/" target="SWISH">SWISH</a> gibi hazır site indexleme araçlarını kullanabilirsiniz. (SWISH'i tavsiye ederim)
+
+<p>
+Dosyada arama yaptırmanın değişik yolları vardır. Eğer bir tek dosyada arama yaptıracaksanız, bir döngü ile dosyadaki bütün kayıtları teker teker okutup aradığınız verinin o kayıtta geçip geçmediğini kontrol edebilir, ya da Perl'ün <font face="Courier New">grep()</font> fonksiyonunu kullanarak dosyanın tamamını bir seferde tarayabilirsiniz. Birinci yolu geçen bölümde öğrendiğimiz bilgilerle yapabilirsiniz. Bu bölümde ikinci yol olan  <font face="Courier New">grep()</font> fonksiyonunu kullanarak bunu nasıl yapabileceğinizi anlatacağım.
+
+<p>
+<font face="Courier New">grep()</font> fonksiyonunun kullanımı aşağıdaki gibidir.
+
+<p>
+<ul>
+<font face="Courier New">@sonuclar = grep(/$arananmetin/,@liste);</font>
+</ul>
+
+<p>
+Sanırım bir örnek verirsek daha iyi anlaşılır.
+
+<p>
+<ul>
+<font face="Courier New">
+#!/usr/bin/perl<br>
+@liste = ("sinan","koray","baris","orhan");<br>
+$arananmetin = "an";<br>
+@sonuclar = grep(/$arananmetin/,@liste);<br>
+foreach $i (@sonuclar) { print "$i\n"; }
+</font>
+</ul>
+
+<p>
+Bu programın çıktısı aşağıdaki gibi olur.
+
+<p>
+<ul>
+<font face="Courier New">
+sinan<br>
+orhan
+</font>
+</ul>
+<p>
+Şimdi biraz daha gelişmiş bir örnek verelim. Aşağıdaki gibi, öğrencilerin okul numarası, isim ve yaş bilgilerinin kaydedildiği &quot;ogrenci.txt&quot; isimli bir veritabanı dosyamız olsun.
+
+<p>
+<ul>
+<font face="Courier New">
+1|768|Hasan Şahin|15<br>
+2|515|Mustafa Öztürk|16<br>
+3|663|İlhan Yıldırım|16<br>
+4|697|Fikret Yılmaz|15<br>
+5|716|Haluk Çiçek|15<br>
+</font>
+</ul>
+
+<p>
+Şimdi de bu veritabanında arama yaptırmak için bir script yazalım.
+
+<p>
+<ul>
+<font face="Courier New">
+#!/usr/bin/perl<br>
+$veridosyasi = &quot;ogrenci.txt&quot;;<br>
+read(STDIN, $tampon, $ENV{'CONTENT_LENGTH'});<br>
+@ciftler = split(/&amp;/, $tampon);<br>
+<br>
+foreach $cift (@ciftler) {<br>
+&nbsp;&nbsp;&nbsp;($alanadi, $deger) = split(/=/, $cift);<br>
+&nbsp;&nbsp;&nbsp;$deger =~ tr/+/ /;<br>
+&nbsp;&nbsp;&nbsp;$deger =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack(&quot;C&quot;, hex($1))/eg;<br>
+&nbsp;&nbsp;&nbsp;$deger =~ s/~!/ ~!/g;<br>
+&nbsp;&nbsp;&nbsp;$FORM{$alanadi} = $deger;<br>
+}<br>
+<br>
+$arananmetin = $FORM{'isim'};<br>
+<br>
+open(DOSYA,$veridosyasi);<br>
+@bilgiler = &lt;DOSYA&gt;;<br>
+close(DOSYA);<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+print &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Arama Sonuçları&lt;/title&gt;&lt;/head&gt;\n&quot;;<br>
+print &quot;&lt;body&gt;&lt;h3&gt;Arama Sonuçları&lt;/h3&gt;\n&quot;;<br>
+<br>
+$bulunansayisi = 0;<br>
+<br>
+@sonuclar = grep(/$arananmetin/,@bilgiler);<br>
+<br>
+if ($#sonuclar &gt;= 0) {<br>
+&nbsp;&nbsp;&nbsp;foreach $i (@sonuclar) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chomp($i);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;($kayitno,$okulno,$adsoyad,$yas) = split(/\|/,$i);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print &quot;&lt;b&gt;$adsoyad&lt;/b&gt; Okul No: $okulno Yaş: $yas&lt;br&gt;\n&quot;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$bulunansayisi++;<br>
+&nbsp;&nbsp;&nbsp;}<br>
+print &quot;&lt;br&gt;&lt;b&gt;$bulunansayisi&lt;/b&gt; kayıt bulundu.&lt;p&gt;\n&quot;;<br>
+}<br>
+else {<br>
+&nbsp;&nbsp;&nbsp;print "Kayıt Bulunamadı.&lt;p&gt;\n";<br>
+}<br>
+<br>
+print "&lt;/body&gt;&lt;/html&gt;\n&quot;;</font>
+</ul>
+
+<p>
+Bu programı &quot;ogrenci1.cgi&quot; adıyla kaydedin. Şimdi sıra bu scripti çağıracak formu hazırlamaya geldi.
+
+<p>
+<ul>
+<font face="Courier New">
+&lt;form action=&quot;http://www.sinanilyas.com/cgi-bin/ornek/ogrenci1.cgi&quot;&gt;<br>
+Aradığınız kişinin ismini girin &lt;input type=&quot;Text&quot; name=&quot;isim&quot;&gt;<br>
+&lt;/form&gt;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/ogrenci1.html" target="ornek">Denemek için tıklayın</a>
+
+<p>
+<b>Not:</b> <font face="Courier New">$#sonuclar</font> <font face="Courier New">@sonuclar</font> dizisinin eleman sayısının bir eksiğini verir.
+
+<p>
+Formumuzdaki kutucuğa &quot;Hasan&quot; (tırnak koymadan) yazarsanız script size "Hasan Şahin" isimli öğrenciye ait bilgileri verir. Fakat, script kayıtları alan ayırımı yapmadan taradığı için isim yerine örneğin "15" (tırnaksız) yazarsak bize 15 yaşındaki ve okul numarasında 15 geçen öğrencilere ait bilgileri verir. Bunu hatayı gidermek için scriptimizi aşağıdaki şekilde değiştirmemiz gerekir.
+
+<p>
+<ul>
+<font face="Courier">
+#!/usr/bin/perl<br>
+$veridosyasi = &quot;ogrenci.txt&quot;;<br>
+read(STDIN, $tampon, $ENV{'CONTENT_LENGTH'});<br>
+@ciftler = split(/&amp;/, $tampon);<br>
+<br>
+foreach $cift (@ciftler) {<br>
+&nbsp;&nbsp;&nbsp;($alanadi, $deger) = split(/=/, $cift);<br>
+&nbsp;&nbsp;&nbsp;$deger =~ tr/+/ /;<br>
+&nbsp;&nbsp;&nbsp;$deger =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack(&quot;C&quot;, hex($1))/eg;<br>
+&nbsp;&nbsp;&nbsp;$deger =~ s/~!/ ~!/g;<br>
+&nbsp;&nbsp;&nbsp;$FORM{$alanadi} = $deger;<br>
+}<br>
+<br>
+$arananmetin = $FORM{'isim'};<br>
+<br>
+open(DOSYA,$veridosyasi);<br>
+@bilgiler = &lt;DOSYA&gt;;<br>
+close(DOSYA);<br>
+print &quot;Content-type:text/html\n\n&quot;;<br>
+print &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Arama Sonuçları&lt;/title&gt;&lt;/head&gt;\n&quot;;<br>
+print &quot;&lt;body&gt;&lt;h3&gt;Arama Sonuçları&lt;/h3&gt;\n&quot;;<br>
+<br>
+$bulunansayisi = 0;<br>
+<br>
+@sonuclar = grep(/$arananmetin/,@bilgiler);<br>
+<br>
+if ($#sonuclar &gt;= 0) {<br>
+&nbsp;&nbsp;&nbsp;foreach $i (@sonuclar) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chomp($i);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;($kayitno,$okulno,$adsoyad,$yas) = split(/\|/,$i);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($adsoyad =~ $arananmetin) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print &quot;&lt;b&gt;$adsoyad&lt;/b&gt; Okul No: $okulno Yaş: $yas&lt;br&gt;\n&quot;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$bulunansayisi++;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+if ($bulunansayisi == 0) {<br>
+&nbsp;&nbsp;&nbsp;print &quot;Kayıt Bulunamadı.&lt;p&gt;\n&quot;;<br>
+}<br>
+else {<br>
+&nbsp;&nbsp;&nbsp;print &quot;&lt;br&gt;&lt;b&gt;$bulunansayisi&lt;/b&gt; kayıt bulundu.&lt;p&gt;\n";<br>
+}<br>
+<br>
+print "&lt;/body&gt;&lt;/html&gt;\n&quot;;
+</font>
+</ul>
+
+<p>
+<img src="../grafik/ok-1.gif" width="13" height="15" align="absmiddle"> 
+<a href="ornek/ogrenci2.html" target="ornek">Denemek için tıklayın</a>
+
+<p>
+<b>Not:</b> <font face="Courier New">if ($adsoyad =~ $arananmetin)</font> satırı <font face="Courier New">$arananmetin</font> değişkenine atanan metnin, <font face="Courier New">$adsoyad</font> değişkenine atanan metnin içerisinde geçip geçmediğini bulmak için kullanılmıştır.
+
+<p>
+Bu örnekte <font face="Courier New">$bulunansayisi</font> isimli değişkenin değeri sadece aranan metin &quot;isim&quot; alanında bulunduğu zaman arttırılır. Eğer aranan metin &quot;isim&quot; alanında değil de örneğin &quot;yaş&quot; alanında bulunursa kayıt ekrana yazdırılmaz ve <font face="Courier New">$bulunansayisi</font> değişkeninin değeri arttırılmaz. Scriptin sonunda <font face="Courier New">$bulunansayisi</font> değişkeninin değeri kontrol edilir ve eğer <font face="Courier New">0</font>'sa &quot;Kayıt bulunamadı&quot; mesajı yazdırılır.
+
+<p>
+<div align="center">
+<table border="0">
+<tr><td>
+<a href="bolum6.html">
+Önceki Sayfa
+</a>
+</td><td>
+<a href="index.html">
+Konulara Dön
+</a>
+</td><td>
+<a href="bolum8.html">
+Sonraki Sayfa
+</a>
+</td></tr>
+</table>
+			<!-- Gövde metni sonu -->
+
+			<p></p>
+			
+
+			<p style="text-align: center; font-size: 9px; margin-bottom: 0px;">
+			&copy;1997-2005, <a href="http://www.sinanilyas.com/hakkimda" onmouseover="window.status='Özgeçmiş'; return true;">Sinan İLYAS</a>
+			</p>
+		</td>
+		<td style="background: url(/grafik/cerceve-sag.gif); width: 29px;"></td>
+	</tr>
+	<tr>
+		<td style="background: url(/grafik/cerceve-sol-alt.gif); width:29px; height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-alt.gif); height: 29px;"></td>
+		<td style="background: url(/grafik/cerceve-sag-alt.gif); width:29px; height: 29px;"></td>
+	</tr>
+</table>
+
+</body>
+
+</html>

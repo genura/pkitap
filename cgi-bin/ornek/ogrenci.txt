@@ -1,0 +1,5 @@
+1|768|Hasan Þahin|15
+2|515|Mustafa Öztürk|16
+3|663|Ýlhan Yýldýrým|16
+4|697|Fikret Yýlmaz|15
+5|716|Haluk Çiçek|15
